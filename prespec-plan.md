@@ -65,38 +65,57 @@ at distinct levels of identification; no multiple testing correction is applied
 because they are not repeated tests of the same hypothesis. Wild cluster
 bootstrap p-values (Webb 6-point weights, 10,000 replications) are the
 preferred basis for inference where cluster counts fall below 40; analytic
-cluster-robust standard errors are reported alongside.
+cluster-robust standard errors are reported alongside. Holm-adjusted p-values
+are reported as a robustness check alongside raw p-values.
+
+**Data coverage and deviations.** Before each specification is estimated, a
+feasibility check on data coverage, variable availability, and sample
+composition will be conducted and reported. Any deviation from the primary
+specification due to data constraints — including missing variables,
+insufficient coverage, or sample selection — will be documented in the
+implementation log and in all output tables. No specification is omitted
+without explicit disclosure of the reason.
 
 ---
 
 ## Pre-registered specifications
 
-### Specification 1 — Targeting consistency
+### Specification 1a — Targeting consistency (contemporaneous)
 
-**Question:** Does EIB lending volume per SME increase with the severity of
-SME financing constraints at the regional level, after controlling for income
-and fixed effects?
+**Question:** Does contemporaneous EIB lending intensity correlate with the
+severity of SME financing constraints at the regional level, after controlling
+for income and fixed effects?
 
 **Estimating equation:**
 
-$$\log(\text{EIB\_volume\_per\_SME}_{rt}) = \alpha + \beta \cdot \text{constraint}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \varepsilon_{rt}$$
+$$\log(\text{EIB\_volume\_per\_SME}_{rt}) = \alpha + \beta \cdot \text{constraint}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + \varepsilon_{rt}$$
 
 where $r$ = country or NUTS-2 region, $t$ = year, $\delta_r$ = region fixed
-effects, $\theta_t$ = year fixed effects.
+effects, $\theta_t$ = year fixed effects, and $\mathbf{1}(t=2020)$ is an
+unconditional indicator for the COVID-19 shock year.
 
 **Variables:**
 - LHS: log EIB signed commitments per SME enterprise (EUR at contract date;
   enterprise count from Eurostat SBS V11110, size 10–249)
 - $\text{constraint}_{rt}$: share of SMEs reporting access to finance as
   their main obstacle to investment, measured contemporaneously with EIB
-  volume (constraint survey year = EIB signature year). A lagged
-  specification ($\text{constraint}_{r,t-1}$) is a pre-designated robustness
-  check.
+  volume (constraint survey year = EIB signature year).
 - $\text{GDP\_pc}_{rt}$: GDP per capita at current prices, EUR (Eurostat
   `nama_10_pc`, variable CP\_EUR\_HAB)
 
+**Scope note on the numerator.** The EIB Projects Financed dataset is
+described by the EIB as including "all financing contracts signed by the EIB"
+(https://www.eib.org/en/projects/loans/index.htm). This encompasses direct
+lending to large corporates and infrastructure projects as well as
+intermediated SME operations. The ratio \text{EIB\_volume\_per\_SME}_{rt}
+therefore measures total EIB Group activity intensity relative to the SME
+enterprise stock, not purely SME intermediated lending per SME. If the CSV
+contains a sector, beneficiary-type, or modality column that permits
+SME-restricted filtering, the filtered ratio will be reported as a robustness
+check.
+
 **Inference:** SEs clustered at country level; wild cluster bootstrap
-alongside analytic SEs.
+alongside analytic SEs. Holm-adjusted p-values reported as robustness.
 
 **Expected sign:** $\beta > 0$.
 
@@ -104,18 +123,46 @@ alongside analytic SEs.
 significant at α = 0.05. A negative or zero $\beta$ is a substantively
 important finding requiring careful interpretation before outputs are written.
 
-**Identification note:** Constraint and EIB volume are measured
-contemporaneously. This specification cannot distinguish whether EIB
-systematically targets regions with pre-existing constraint severity from
-whether EIB lending responds to contemporaneous conditions in the same
-year. The lagged constraint robustness check ($t-1$) partially addresses
-this: if it produces a similar estimate, simultaneity is a less likely
-explanation.
+**What this specification investigates.** Because constraint and EIB volume
+are measured contemporaneously, this specification tests whether EIB lending
+and constraint severity co-vary within region-year cells. It cannot
+distinguish targeting of pre-existing constraints from contemporaneous
+response to the same macro shock. Specification 1b addresses this
+distinction.
 
 **Pre-designated robustness (secondary, not pre-registered):** Replace the
 LHS with log(EIB\_total\_volume / GDP\_pc\_{rt}), where GDP\_pc is Eurostat
 `nama_10_pc` CP\_EUR\_HAB at current prices. This checks whether the
-per-SME enterprise denominator drives the result.
+per-SME enterprise denominator drives the result. A specification including
+both 2020 and 2021 indicators is also reported as a robustness check.
+
+---
+
+### Specification 1b — Targeting consistency (lagged constraint)
+
+**Question:** Does lagged constraint severity predict subsequent EIB lending
+intensity, after controlling for income and fixed effects?
+
+**Estimating equation:**
+
+$$\log(\text{EIB\_volume\_per\_SME}_{rt}) = \alpha + \beta \cdot \text{constraint}_{r,t-1} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + \varepsilon_{rt}$$
+
+**Variables:** Same as Specification 1a, except $\text{constraint}_{r,t-1}$
+is the one-year-lagged share of SMEs reporting access to finance as their main
+obstacle to investment.
+
+**Inference, expected sign, and pass criterion:** Same as Specification 1a.
+
+**What this specification investigates.** By lagging the constraint
+indicator, this specification tests whether EIB systematically directs lending
+toward regions with *pre-existing* financing gaps, rather than responding to
+contemporaneous conditions. A coefficient similar to Specification 1a
+strengthens the case for deliberate targeting; a materially smaller or
+insignificant coefficient would suggest that contemporaneous co-movement
+rather than forward-looking targeting drives the correlation.
+
+**Pre-designated robustness (secondary, not pre-registered):** Same as
+Specification 1a.
 
 ---
 
@@ -127,7 +174,7 @@ and fixed effects?
 
 **Estimating equation:**
 
-$$\text{Outcome}_{rt} = \alpha + \beta \cdot \text{EIB\_intensity}_{r,t-1} + \gamma \cdot \text{constraint}_{r,t-1} + \phi \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \varepsilon_{rt}$$
+$$\text{Outcome}_{rt} = \alpha + \beta \cdot \text{EIB\_intensity}_{r,t-1} + \gamma \cdot \text{constraint}_{r,t-1} + \phi \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + \varepsilon_{rt}$$
 
 **Temporal alignment:** $t-1$ = EIB signature year and constraint survey
 year; $t$ = outcome year. Example: 2019 EIB intensity and 2019 constraint
@@ -145,9 +192,13 @@ the green investment behavior at issue.
 (Eurostat business demography, size 0–249). Designated exploratory because
 firm entry is a less direct proxy for the green investment channel.
 
-**Inference:** same as Specification 1.
+**Inference:** same as Specifications 1a and 1b.
 
 **Expected sign:** $\beta > 0$.
+
+**COVID-19 control.** An unconditional indicator for 2020 is included in the
+primary specification. A robustness check including both 2020 and 2021
+indicators is also reported.
 
 **Interpretation:** This is a correlational test only; omitted variable bias
 is unresolved. Co-movement in the expected direction is consistent with the
@@ -169,8 +220,8 @@ $$\text{Bartik}_{rt} = \sum_j \left( \text{employment\_share}_{jr,0} \times \tex
 
 where $j$ = NACE 2-digit sector; employment shares are from Eurostat SBS
 (V16110: persons employed, or V13110: employees) at NACE 2-digit × country,
-size 10–249, fixed at base year $t_0 = 2015$ (or the earliest year with
-≥80% sector coverage per country, logged as a deviation from this plan);
+size 10–249, fixed at base year $t_0 = 2015$ (or the earliest available year
+with satisfactory sector coverage, reported in output footnotes);
 and $\text{EIB\_sectoral\_lending}_{jt}$ is EU-aggregate EIB signed volume
 by sector and year — set at the institutional level by the EIB Board and
 not determined by conditions in any single region. Shares and shifts enter
@@ -182,13 +233,13 @@ instrument; OLS is reported as a secondary result only.
 **Estimating equations:**
 
 First stage:
-$$\text{EIB\_volume\_per\_SME}_{rt} = \pi \cdot \text{Bartik}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + u_{rt}$$
+$$\text{EIB\_volume\_per\_SME}_{rt} = \pi \cdot \text{Bartik}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + u_{rt}$$
 
 where EIB\_volume\_per\_SME\_{rt} is EIB signed commitments per SME
 enterprise (EUR at contract date, levels).
 
 Second stage:
-$$\text{constraint}_{rt} = \beta \cdot \widehat{\text{EIB\_volume\_per\_SME}}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \varepsilon_{rt}$$
+$$\text{constraint}_{rt} = \beta \cdot \widehat{\text{EIB\_volume\_per\_SME}}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + \varepsilon_{rt}$$
 
 **Pass criterion for second stage:** Kleibergen-Paap rk Wald F-statistic
 (cluster-robust) > 10. The standard non-clustered F is not reported because
@@ -200,6 +251,12 @@ The research question is then addressed by Specifications 1 and 4 alone.
 constraint share).
 
 **Inference:** wild cluster bootstrap; analytic SEs reported alongside.
+Holm-adjusted p-values reported as robustness.
+
+**Exploratory secondary analysis (not pre-registered):** Interaction of
+Bartik exposure with private credit to GDP ratio — tests whether the effect
+of EIB sectoral exposure on financing constraints varies with regional
+financial development.
 
 **Validity failure rule:** If the pre-registered Bartik exclusion restriction
 test returns a significant residual correlation (p < 0.10), the instrument
@@ -253,7 +310,13 @@ expenditure directed at green activities (continuous).
 and post-treatment periods.
 
 **Inference:** cluster-robust SEs at country level; wild cluster bootstrap
-alongside analytic SEs.
+alongside analytic SEs. Holm-adjusted p-values reported as robustness.
+
+**COVID-19 control.** An unconditional indicator for 2020 is included in all
+aggregate-level specifications (Specifications 1–3). For Specification 4
+(firm-level), a 2020 wave indicator is included if the calendar-year mapping
+of EIBIS waves places observations in 2020. A robustness check including both
+2020 and 2021 indicators is reported for all specifications.
 
 **Validity failure rule:** If pre-treatment ATT(g,t) coefficients are
 statistically significant at p < 0.05 for more than 50% of cohorts, the
@@ -309,4 +372,4 @@ original hash link.
 
 ---
 
-*This file must not be modified after its initial commit.*
+*This file must not be modified after data download or inspection begins.*
