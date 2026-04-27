@@ -14,6 +14,7 @@ dependencies = [
     "linearmodels",
     "matplotlib",
     "numpy",
+    "openpyxl>=3.1.5",
     "pandas",
     "pdfplumber",
     "polars",
