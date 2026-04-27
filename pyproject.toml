@@ -1,0 +1,32 @@
+[project]
+name = "eib-seclending"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4",
+    "contextily",
+    "duckdb",
+    "eurostat",
+    "geopandas",
+    "jupyter",
+    "linearmodels",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pdfplumber",
+    "polars",
+    "pyfixest",
+    "requests",
+    "rpy2>=3.6.7",
+    "scipy",
+    "seaborn",
+    "statsmodels",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+    "ruff>=0.15.12",
+]

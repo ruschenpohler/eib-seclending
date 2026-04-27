@@ -1,0 +1,30 @@
+# Agent and design documents
+AGENTS.md
+impl-log.md
+ideas/
+
+# Data (all subdirectories)
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.ruff_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment
+.venv/
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# uv
+.python-version
