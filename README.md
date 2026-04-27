@@ -45,8 +45,8 @@ uv run jupyter notebook
 ## Results
 
 > **Pre-registered design.** All results below were specified before data access.
-> Pre-analysis plan: [`7e1021eef1d32bde45abf2265dd39f6156f0962e`](https://github.com/ruschenpohler/eib-seclending/blob/7e1021eef1d32bde45abf2265dd39f6156f0962e/prespec-plan.md)
-> · [Commit timestamp](https://github.com/ruschenpohler/eib-seclending/commit/7e1021eef1d32bde45abf2265dd39f6156f0962e)
+> Pre-analysis plan: [`f0313ba8ae0a293c36e2efbb581512e5c69cfbcd`](https://github.com/ruschenpohler/eib-seclending/blob/f0313ba8ae0a293c36e2efbb581512e5c69cfbcd/prespec-plan.md)
+> · [Commit timestamp](https://github.com/ruschenpohler/eib-seclending/commit/f0313ba8ae0a293c36e2efbb581512e5c69cfbcd)
 
 *Results will be populated as each phase completes. See `prespec-plan.md` for the full pre-registered specification of all four estimating equations.*
 
