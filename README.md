@@ -102,7 +102,7 @@ per SME co-varies with the severity of financing constraints within
 country-year cells, controlling for GDP per capita, country fixed effects,
 year fixed effects, and a COVID-19 indicator:
 
-    $$\log(\text{EIB\_volume\_per\_SME}_{rt}) = \beta \cdot \text{constraint}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + \varepsilon_{rt}$$
+$$\log(\text{EIB\_volume\_per\_SME}_{rt}) = \beta \cdot \text{constraint}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + \varepsilon_{rt}$$
 
 | Specification | β | SE | p-value | N | Finding |
 |---|---|---|---|---|---|
@@ -177,7 +177,7 @@ unobservables), a true small effect, or coarse outcome measurement.
 **Construction.** The Bartik instrument is constructed exactly as
 pre-registered:
 
-    $$\text{Bartik}_{rt} = \sum_j \left( \text{employment\_share}_{jr,2015} \times \text{EIB\_sectoral\_lending}_{jt} \right)$$
+$$\text{Bartik}_{rt} = \sum_j \left( \text{employment\_share}_{jr,2015} \times \text{EIB\_sectoral\_lending}_{jt} \right)$$
 
 Employment shares are from Eurostat SBS V16110 (persons employed), size
 classes 10–249 aggregated, base year 2015. EIB sectoral shifts are
@@ -188,7 +188,7 @@ M, N).
 
 **First stage.**
 
-    $$\log(\text{EIB\_per\_SME}_{rt}) = \pi \cdot \text{Bartik}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + u_{rt}$$
+$$\log(\text{EIB\_per\_SME}_{rt}) = \pi \cdot \text{Bartik}_{rt} + \gamma \cdot \log(\text{GDP\_pc}_{rt}) + \delta_r + \theta_t + \mathbf{1}(t=2020) + u_{rt}$$
 
 | Coefficient | Estimate | SE | t | p | F-statistic |
 |---|---|---|---|---|---|
