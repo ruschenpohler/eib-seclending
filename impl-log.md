@@ -968,6 +968,97 @@ Proceed to Bartik instrument construction (Spec 3, Phase 2b).
 
 ---
 
+### 23:00 | phase2/research | STATUS: EIBIS MICRODATA ACCESS RESEARCH COMPLETE
+
+**What was researched:**
+Investigated the process for accessing EIBIS firm-level microdata, which is
+required for Phase 2 (Callaway-Sant'Anna staggered DiD) and for Fix B of the
+Bartik weak-instrument problem.
+
+**Current state of EIBIS data access:**
+
+1. **Public aggregate data:** The EIBIS Data Portal (data.eib.org/eibis/graph)
+   provides country-level and sector-level aggregates for waves 2018-2025.
+   These are already available and were used as a fallback in Phase 1 (Check 4).
+   However, aggregate data does not support firm-level causal inference.
+
+2. **Microdata access process:** Based on standard practice for EIB survey data
+   and comparable EU institution microdata (ECB SAFE, Eurostat microdata):
+   - **Application required:** Researchers must submit a formal data access
+     request to the EIB Economics Department or the EIB Group Data Protection
+     Officer. There is no automated online application portal.
+   - **Typical requirements:**
+     * Research proposal describing the scientific purpose
+     * CV and institutional affiliation
+     * Data security plan (secure storage, no redistribution)
+     * Estimated duration of access
+     * Commitment to publish results (EIB often requires co-authorship or
+       acknowledgement)
+   - **Timeline:** Typically 2-6 months from initial application to data
+     delivery, assuming approval. Rejections are common for unsolicited
+     requests without an existing EIB collaboration.
+   - **Cost:** Usually free for academic researchers, but institutional
+     data-use agreements may require legal review.
+
+3. **Known existing users:**
+   - Amamou et al. (2020) and Barbera et al. (2022) both used EIBIS microdata
+     for their EIB impact evaluations. Both papers were produced by EIB
+     economists or in close collaboration with EIB. This suggests the
+     microdata is available but access is relationship-dependent.
+   - The EIBIS methodology report (2019) mentions that microdata is archived
+     and available for "research purposes" but does not specify the process.
+
+4. **Alternative pathways:**
+   - **EIB evaluation department:** The EIB Group Evaluation department
+     conducts internal evaluations and may share anonymised microdata for
+     external validation. This requires direct contact with an evaluation
+     officer.
+   - **Joint research project:** Proposing a co-authored paper with an EIB
+     economist is the most reliable path. The EIB has incentives to publish
+     rigorous impact evaluations.
+   - **DG ECFIN / European Commission:** Some EIBIS modules are co-funded by
+     the European Commission and may be accessible via DG ECFIN research
+     networks.
+   - **BvD ORBIS merge (Phase 3):** If EIBIS microdata is denied, ORBIS
+     (Bureau van Dijk) contains firm financials and can be merged with EIB
+     Projects data via beneficiary names. This is a weaker identification
+     strategy but provides an alternative data path.
+
+**Critical assessment — is it worth applying now?**
+
+| Factor | Assessment |
+|---|---|
+| **Timeline** | 2-6 months minimum. If the paper has a submission deadline, this is a major constraint. |
+| **Probability of approval** | Moderate-to-low for unsolicited academic requests. Higher if affiliated with EIB evaluation or co-authoring with EIB staff. |
+| **Value for this project** | **High.** EIBIS is the only dataset with firm-level green investment + EIB support indicators + panel structure. Without it, Phase 2 cannot proceed as pre-registered. |
+| **Fallback if denied** | Phase 2b (Bartik + SAFE) stands alone as the core replicable contribution, per AGENTS.md design. The paper is still complete without Phase 2. |
+
+**Recommendation:**
+The human should decide whether to:
+1. **Invest in EIBIS application now** — if the project timeline allows 2-6
+   months and the human has institutional affiliation or EIB contacts.
+2. **Defer EIBIS and complete the paper with Phase 1 + Phase 2b** — the
+   pre-registered design explicitly allows this fallback. Phase 2b becomes
+   the main deliverable.
+3. **Pursue ORBIS as an intermediate step** — ORBIS is commercially available
+   (many universities have subscriptions) and can provide firm financial
+   controls for a weaker but still informative analysis.
+
+**Action items for human:**
+- [ ] Decide whether to pursue EIBIS microdata access
+- [ ] If yes: identify EIB contact (evaluation department or economics
+  department research unit)
+- [ ] If yes: draft research proposal for data access application
+- [ ] If no: update README to state Phase 2 is aspirational and Phase 2b is
+  the core contribution
+
+**Phase 2 stubs committed:**
+`src/analysis/cs_estimation.py` contains function signatures, docstrings, and
+pseudocode for all Phase 2 analysis steps. Execution will be immediate once
+EIBIS microdata arrives.
+
+---
+
 ### 22:30 | phase2b/analysis | STATUS: BARTIK IV CONSTRUCTED — FIRST-STAGE FAILS (F = 2.45)
 
 **What was done:**
