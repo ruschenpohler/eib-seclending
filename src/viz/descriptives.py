@@ -118,6 +118,14 @@ def beat2_delta_scatter(panel):
     top_residuals = df.nlargest(8, "residual")
     bottom_residuals = df.nsmallest(8, "residual")
     outliers = pd.concat([top_residuals, bottom_residuals]).drop_duplicates()
+
+    # Also label extreme corners: minimum EIB funding and minimum constraint
+    # These may not have extreme residuals but are visually informative
+    min_eib = df.loc[df["d_eib_per_sme"].idxmin()]
+    min_constraint = df.loc[df["d_constraint"].idxmin()]
+    extreme_corners = pd.DataFrame([min_eib, min_constraint])
+    outliers = pd.concat([outliers, extreme_corners]).drop_duplicates()
+
     for _, row in outliers.iterrows():
         ax.annotate(
             f"{row['country']} {int(row['year'])}",
