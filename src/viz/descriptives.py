@@ -110,10 +110,15 @@ def beat2_delta_scatter(panel):
         linewidths=0.3,
     )
 
-    # Label some points (largest changes)
-    df["abs_d"] = df["d_eib_per_sme"].abs() + df["d_constraint"].abs()
-    top_changes = df.nlargest(8, "abs_d")
-    for _, row in top_changes.iterrows():
+    # Label points with largest absolute residuals from OLS fit
+    # (these are the true outliers: they violate the correlation pattern most strongly)
+    z = np.polyfit(df["d_eib_per_sme"], df["d_constraint"], 1)
+    p = np.poly1d(z)
+    df["residual"] = df["d_constraint"] - p(df["d_eib_per_sme"])
+    top_residuals = df.nlargest(8, "residual")
+    bottom_residuals = df.nsmallest(8, "residual")
+    outliers = pd.concat([top_residuals, bottom_residuals]).drop_duplicates()
+    for _, row in outliers.iterrows():
         ax.annotate(
             f"{row['country']} {int(row['year'])}",
             (row["d_eib_per_sme"], row["d_constraint"]),
