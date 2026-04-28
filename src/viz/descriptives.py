@@ -80,7 +80,7 @@ def beat1_constraint_map(panel):
     )
     ax.set_axis_off()
 
-    out = OUTPUTS_FIGURES / "phase1_beat1_constraint_map.png"
+    out = OUTPUTS_FIGURES / "constraint_map.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=150, bbox_inches="tight")
     plt.close(fig)
@@ -156,7 +156,7 @@ def beat2_delta_scatter(panel):
     )
     ax.legend(loc="upper right")
 
-    out = OUTPUTS_FIGURES / "phase1_beat2_delta_scatter.png"
+    out = OUTPUTS_FIGURES / "delta_scatter.png"
     fig.savefig(out, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {out}")
@@ -227,7 +227,7 @@ def beat3_time_series(panel):
     lines2, labels2 = ax2.get_legend_handles_labels()
     ax1.legend(lines1 + lines2, labels1 + labels2, loc="upper left")
 
-    out = OUTPUTS_FIGURES / "phase1_beat3_time_series.png"
+    out = OUTPUTS_FIGURES / "timeseries.png"
     fig.savefig(out, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {out}")
@@ -244,20 +244,22 @@ def beat3_time_series(panel):
         cdf = facet_df[facet_df["country"] == country].sort_values("year")
 
         ax2 = ax.twinx()
-        ax.plot(
+        (line1,) = ax.plot(
             cdf["year"],
             cdf["eib_per_sme"] / 1000,
             color="tab:blue",
             marker="o",
             linewidth=1.5,
+            label="EIB/SME (kEUR)",
         )
-        ax2.plot(
+        (line2,) = ax2.plot(
             cdf["year"],
             cdf["access_to_finance_share"] * 100,
             color="tab:red",
             marker="s",
             linewidth=1.5,
             linestyle="--",
+            label="Constraint (%)",
         )
 
         ax.set_title(country, fontsize=10)
@@ -267,13 +269,22 @@ def beat3_time_series(panel):
         if idx % 4 == 3:
             ax2.set_ylabel("Constraint (%)", color="tab:red", fontsize=8)
 
+        # Add legend to the first subplot only
+        if idx == 0:
+            ax.legend(
+                handles=[line1, line2],
+                labels=["EIB/SME (kEUR)", "Constraint (%)"],
+                loc="upper left",
+                fontsize=7,
+            )
+
     fig.suptitle(
         "EIB Intensity and Financial Constraints by Country (selected EU-27)",
         fontsize=12,
     )
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 
-    out2 = OUTPUTS_FIGURES / "phase1_beat3_time_series_facet.png"
+    out2 = OUTPUTS_FIGURES / "timeseries_byCountry.png"
     fig.savefig(out2, dpi=150, bbox_inches="tight")
     plt.close(fig)
     print(f"Saved {out2}")
