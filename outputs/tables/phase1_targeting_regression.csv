@@ -1,0 +1,3 @@
+spec,N,beta_constraint,se_constraint,t_stat,p_value,R2_within,FE_type,cluster_level,notes
+1a_contemporaneous,160,3.4837762428992582,3.4056531048209466,1.0229392529637626,0.31576070578736837,0.5699828195145111,country + year,country,Co-primary. Wild bootstrap p-value to be added.
+1b_lagged_constraint,133,-0.19027541735164188,2.246138722753805,-0.08471222877915613,0.9331391034941428,0.5936705579463529,country + year,country,Co-primary. Wild bootstrap p-value to be added.
