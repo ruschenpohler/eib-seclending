@@ -2,7 +2,7 @@
 
 ## Abstract
 
-EIB intermediated SME lending is premised on correcting financing market failures. Regions where SMEs face more severe financing obstacles should attract more EIB support, and that support should ease constraints. This project tests both claims using country-level panel data from the public EIB Projects dataset against pre-registered specifications. Targeting regressions ask whether EIB per-SME lending is systematically higher where constraints are most acute. We find null results that survive several robustness checks and heterogeneity analysis. Employing a shift-share instrument, we ask whether exogenous variation in EIB sectoral exposure causally reduces those constraints but find the instrument to be weak at the country-level, and so we put little credence in these results. We caveat our findings by noting that because the EIB Projects data has no sub-national geographic codes, analysis is limited to 27 countries and hence statistical power low. Planned extensions outlined towards the end (working with EIB-internal regional data or EIBIS microdata) would resolve these limitations, and the needed analysis pipeline has already been set up and pre-registered. A further contribution is our use of Git's content-addressing as a lightweight but cryptographically verifiable pre-registration mechanism before data access. All primary specifications, expected coefficient signs, and the primary/secondary designation for every estimating equation, including analysis extensions, were committed at a fixed, publicly visible hash that cannot be altered retroactively.
+EIB intermediated SME lending is premised on correcting financing market failures. Regions where SMEs face more severe financing obstacles should attract more EIB support, and that support should ease constraints. This project tests both claims using country-level panel data from the public EIB Projects dataset against pre-registered specifications. Targeting regressions ask whether EIB per-SME lending is systematically higher where constraints are most acute. A between-country estimator finds that countries with worse average constraints do receive more EIB lending on average, but within-country variation in constraints does not predict within-country variation in EIB intensity. The within-country null is robust to several checks and heterogeneity analyses. Employing a shift-share instrument, we ask whether exogenous variation in EIB sectoral exposure causally reduces those constraints but find the instrument to be weak at the country-level, and so we put little credence in these results. We caveat our findings by noting that because the EIB Projects data has no sub-national geographic codes, analysis is limited to 27 countries and hence statistical power low. Planned extensions outlined towards the end (working with EIB-internal regional data or EIBIS microdata) would resolve these limitations, and the needed analysis pipeline has already been set up and pre-registered. A further contribution is our use of Git's content-addressing as a lightweight but cryptographically verifiable pre-registration mechanism before data access. All primary specifications, expected coefficient signs, and the primary/secondary designation for every estimating equation, including analysis extensions, were committed at a fixed, publicly visible hash that cannot be altered retroactively.
 
 ## Results
 
@@ -39,47 +39,43 @@ $$\log(E_{rt}) = \beta \cdot C_{rt} + \gamma \cdot \log(G_{rt}) + \delta_r + \th
 
 where $E_{rt}$ is EIB volume per SME, $C_{rt}$ is the constraint share, $G_{rt}$ is GDP per capita, and $D_{2020}$ is a COVID-19 indicator.
 
-| Timing | β | SE | p-value | N | Finding |
-|---|---|---|---|---|---|
-| Contemporaneous | +3.48 | 3.41 | 0.316 | 160 | Null |
-| Lagged (t−1) | −0.19 | 2.25 | 0.933 | 133 | Null |
+| Timing | β | SE | 95% CI | p-value | WCB p | N |
+|---|---|---|---|---|---|---|
+| Contemporaneous (within-country) | +3.48 | 3.41 | [−3.2, +10.2] | 0.316 | 0.328 | 160 |
+| Lagged (t−1, within-country) | −0.19 | 2.25 | [−4.6, +4.3] | 0.933 | 0.901 | 133 |
+| Between (country means) | +6.13 | 2.34 | [+1.5, +10.7] | 0.009 | — | 27 |
 
-Both coefficients are positive in the contemporaneous case and near-zero negative in the lagged case, but neither is statistically significant. Wild cluster bootstrap p-values (999 reps, Rademacher weights) confirm the null: contemporaneous p = 0.328, lagged p = 0.901. The null is robust across four first-order robustness checks: an alternative constraint intensity measure (Q0b mean score, p = 0.79), excluding 2020 (p = 0.43), a high-income subsample (p = 0.42), and a low-income subsample (p = 0.23).
+Both within-country point estimates are small relative to their standard errors and are not statistically distinguishable from zero. The 95% confidence interval for the contemporaneous specification spans from −3.2 to +10.2, and the interval for the lagged specification spans from −4.6 to +4.3. These intervals are wide; the data are consistent with both moderate positive targeting and moderate negative selection. Wild cluster bootstrap p-values (999 reps, Rademacher weights) confirm that neither estimate is significant at conventional levels: contemporaneous p = 0.328, lagged p = 0.901.
+
+The between-country estimator tells a different story. Collapsing each country to its 2015–2021 mean and regressing mean log EIB intensity on mean constraint severity and mean log GDP per capita yields a positive and significant coefficient (+6.13, SE = 2.34, p = 0.009). Countries with worse average financing constraints do receive more EIB lending per SME on average. This cross-sectional targeting pattern is precisely what country fixed effects absorb in the within-country specification. The contrast suggests that EIB lending is structurally allocated toward countries with worse financing conditions, but does not respond to time-varying changes in those conditions within countries. In other words, EIB targets the right countries, but does not appear to vary its intensity counter-cyclically within them.
+
+Given the standard error of 3.41 in the contemporaneous within-country specification, the minimum detectable effect at 80% power and 5% significance is approximately 9.6 percentage points of constraint share per log point of EIB lending per SME. In substantive terms, the within-country data can rule out targeting effects larger than this magnitude, but cannot rule out smaller effects. The estimates are therefore uninformative about whether modest within-country targeting exists.
 
 #### Heterogeneity across market integration and constraint severity
 
 Two additional splits test whether the null masks heterogeneity across financially integrated versus less integrated markets, or across high versus low constraint severity.
 
-| Split | Sample | β | SE | p-value | N | Interpretation |
-|---|---|---|---|---|---|---|
-| Euro area | 19 countries | +2.58 | 4.15 | 0.543 | 112 | Null |
-| Non-euro | 8 countries | +7.73 | 4.83 | 0.153 | 48 | Directionally larger, not significant |
-| Interaction | Pooled | +6.74 | 5.38 | 0.221 | 160 | Euro vs. non-euro slope difference |
-| High constraint | 14 countries | +4.00 | 3.07 | 0.215 | 83 | Null |
-| Low constraint | 13 countries | +5.96 | 8.77 | 0.510 | 77 | Null, noisier |
-| Interaction | Pooled | −2.12 | 7.90 | 0.791 | 160 | High vs. low slope difference |
+| Split | Sample | β | SE | 95% CI | p-value | N | Interpretation |
+|---|---|---|---|---|---|---|---|
+| Euro area | 19 countries | +2.58 | 4.15 | [−5.7, +10.9] | 0.543 | 112 | Not distinguishable from zero |
+| Non-euro | 8 countries | +7.73 | 4.83 | [−3.0, +18.5] | 0.153 | 48 | Directionally larger, not significant |
+| Interaction | Pooled | +6.74 | 5.38 | [−3.8, +17.3] | 0.221 | 160 | Euro vs. non-euro slope difference |
+| High constraint | 14 countries | +4.00 | 3.07 | [−2.2, +10.2] | 0.215 | 83 | Not distinguishable from zero |
+| Low constraint | 13 countries | +5.96 | 8.77 | [−11.8, +23.7] | 0.510 | 77 | Noisier, not distinguishable from zero |
+| Interaction | Pooled | −2.12 | 7.90 | [−17.6, +13.4] | 0.791 | 160 | High vs. low slope difference |
 
-The non-euro subsample coefficient is larger (+7.73 versus +2.58 in the euro area) and approaches significance (p = 0.15), consistent with the hypothesis that EIB has a stronger targeting rationale where financial markets are less integrated. However, the interaction term is not significant (p = 0.22), and with only 8 non-euro countries the estimate is noisy. The constraint-level split shows no meaningful difference; high-constraint and low-constraint countries both yield null results. Overall, the null targeting result is robust to all six tested robustness and heterogeneity checks.
+*Note on interaction terms:* The interaction models are estimated on the full pooled sample with country and year fixed effects, imposing a common GDP coefficient and COVID effect across subgroups. The subsample regressions are estimated on restricted samples with their own fixed effects. Because the pooled and subsample regressions use different residual variation, the interaction coefficient does not mechanically equal the difference in subsample slopes. The interaction should be interpreted as a test of whether the pooled slope differs by subgroup, not as a decomposition of the subsample estimates.
 
-Overall, there is no evidence that EIB lending per SME is higher where financing constraints are worse at the country level. Several robustness checks and heterogeneity analyses suggest, this may be a genuine finding, and not merely a measurement artifact. However, there are a number of alternative explanations this analysis cannot distinguish, including:
+The non-euro subsample coefficient is larger (+7.73 versus +2.58 in the euro area) and approaches significance (p = 0.15), consistent with the hypothesis that EIB has a stronger targeting rationale where financial markets are less integrated. However, the interaction term is not significant (p = 0.22), and with only 8 non-euro countries the estimate is noisy. The constraint-level split shows no meaningful difference; high-constraint and low-constraint countries both yield estimates that are not distinguishable from zero. Overall, the uninformative targeting result is robust to all six tested robustness and heterogeneity checks.
 
-1. Targeting occurs within countries (regional, sectoral, or project-level) and is washed out in aggregate
-2. EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity
-3. The country-level constraint measure is too coarse to detect targeting
+Overall, there is no evidence that EIB lending per SME is higher where financing constraints are worse at the country level. Several robustness checks and heterogeneity analyses suggest this may be a genuine finding, not merely a measurement artifact. However, there are a number of alternative explanations this analysis cannot distinguish, including:
+
+1. Targeting occurs within countries (regional, sectoral, or project-level) and is washed out in aggregate.
+2. EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity.
+3. The country-level constraint measure is too coarse to detect targeting that responds to within-country variation.
 4. With only 27 clusters, limited statistical power cannot be excluded as a partial explanation; the NUTS-2 extension would directly address this.
 
-### Do lagged EIB intensities predict subsequent SME outcomes?
-
-A correlational test asks whether lagged EIB intensity predicts subsequent SME outcomes, conditioning on lagged constraints, GDP per capita, and fixed effects. Panel: 25 countries, 2016–2020 outcome years.
-
-| Outcome | β (EIB intensity, t−1) | SE | p-value | Finding |
-|---|---|---|---|---|
-| Industry investment rate | −0.0004 | 0.0018 | 0.829 | Null |
-| Firm entry rate | +0.0020 | 0.0014 | 0.170 | Weak positive, not significant |
-
-The industry investment rate outcome is limited to NACE B+C+D+E (all firm sizes) because Eurostat does not report gross investment (V15110) at the SME size class. The firm entry rate uses size class GE10 (10 or more employees) because Eurostat does not provide a 0–249 size class in the business demography table. Both outcomes are winsorised at the 1st and 99th percentile. Cross-region placebo regressions (substituting leave-one-out average EIB intensity) yield null results, suggesting the weak entry-rate co-movement is country-specific rather than driven by a common eurozone factor. Wild cluster bootstrap p-values confirm the null: investment rate p = 0.600, entry rate p = 0.402.
-
-We find no strong correlational evidence for a plausibility channel from EIB intensity to SME outcomes. The absence of a clear link is consistent with severe omitted-variable bias (EIB selects regions on unobservables), a true small effect, or coarse outcome measurement.
+Pre-registered tests on downstream SME outcomes (industry investment rate and firm entry rate) yielded uninformative estimates, reported in [`outputs/tables/appendix_outcomes.md`](outputs/tables/appendix_outcomes.md). These regressions suffer from denominator mismatches (industry investment covers all firm sizes; firm entry uses the >=10 employees size class) and a short panel, and do not provide credible evidence on whether EIB lending affects SME outcomes.
 
 ### Can we exploit exogeneity in shifts to identify aggregate causal effects?
 
@@ -105,7 +101,7 @@ $$\log(E_{rt}) = \pi \cdot B_{rt} + \gamma \cdot \log(G_{rt}) + \delta_r + \thet
 
 #### The instrument is too weak at the country level to support a causal claim
 
-The first-stage Kleibergen-Paap F-statistic is 2.45, far below the conventional threshold of 10. This is a structural feature of working with only 27 geographic units as a shift-share design requires more granular variation to generate sufficient first-stage power. The public EIB Projects dataset contains no NUTS-2 codes, so regional-level analysis is not feasible with public data alone. Per the pre-registered protocol, the 2SLS second stage is not reported as causal. The instrument and code are documented and saved for use once regional-level data become available.
+The first-stage Kleibergen-Paap F-statistic is 2.45, far below the conventional threshold of 10. But the weakness runs deeper than the F-statistic. Following Borusyak, Hull, and Jaravel (2022), the effective number of independent shocks driving identification is the inverse Herfindahl of the average employment share concentration across sectors. With 12 NACE sections in the instrument, the inverse Herfindahl is only 6.1. Identification is therefore driven by the equivalent of roughly six independent sectoral shocks, not twelve. This low effective shock count, combined with only 27 geographic units, means the instrument lacks the variation needed for credible causal inference even before the first-stage regression is run. The public EIB Projects dataset contains no NUTS-2 codes, so regional-level analysis is not feasible with public data alone. Per the pre-registered protocol, the 2SLS second stage is not reported as causal. The instrument and code are documented and saved for use once regional-level data become available.
 
 ---
 

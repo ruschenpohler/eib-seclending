@@ -1,0 +1,2 @@
+spec,N,beta_constraint,se_constraint,t_stat,p_value,ci_lower,ci_upper,R2,notes
+between_country_means,27,6.1253832545546345,2.3357219982595265,2.6224795840939077,0.008729249765446336,1.5474522600680354,10.703314249041235,0.3004194410273242,Between-country estimator. Country means 2015-2021. HC3 SEs.

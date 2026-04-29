@@ -1253,7 +1253,7 @@ Final README polish, commit all changes, call repo complete for Phase 1 submissi
 ---
 
 
-## Session: 2026-04-29 � OpenCode � README rewrite and final polish
+## Session: 2026-04-29 � OpenCode � README rewrite and final polish
 
 ### 11:15 | docs/readme | STATUS: COMPLETE
 
@@ -1280,5 +1280,66 @@ labels and agent-facing language. Changes:
 
 **Next action:**
 Push to remote. Repo is complete for Phase 1 submission.
+
+---
+
+## Session: 2026-04-29 — Claude Sonnet 4.6 — README narrative revision
+
+### 14:00 | docs/readme | STATUS: COMPLETE
+
+**What was done:**
+Full narrative revision of README.md to align framing with executed analysis.
+The previous README was written for a planned three-step evaluation (targeting
+regression, Bartik IV, firm-level C&S DiD); the revision reframes it to report
+what actually ran while repositioning the unexecuted analysis as extensions.
+
+Specific changes:
+
+- **Title:** "EIB SME Intermediated Lending — Green Investment Additionality
+  Evaluation" → "EIB SME Lending and Financing Constraints: Country-Level
+  Evidence". Removed "green investment" from title since no green investment
+  outcome was measured in the executed analysis.
+
+- **Opening:** Replaced lede pull-quote (about testing green investment
+  additionality) and two-step forward-looking intro with a single honest
+  abstract paragraph: states the motivating question, names what this paper
+  actually tests, reports the key findings (null targeting, Bartik F = 2.45),
+  diagnoses the root cause (0% NUTS-2 coverage, 27 country-year units), and
+  teases extensions in the final sentence.
+
+- **Pre-registration block:** Moved from buried position inside Results
+  section to immediately after the opening paragraph, making it more prominent.
+
+- **Results section headers:** Replaced numbered section headers carrying
+  internal labels ("Phase 1/2b", "Specification 1a/1b", "Beat 3/4") with
+  descriptive questions matching the content ("Does EIB lending target regions
+  with worse financing constraints?", "Can the Bartik instrument identify
+  aggregate causal effects?").
+
+- **Bartik section:** Removed "Key finding:" bold callout; integrated the
+  weak-instrument conclusion naturally into the prose. Replaced "pre-registered
+  protocol" forward reference with direct statement of what the protocol
+  specifies (F < 10 → second stage not reported as causal).
+
+- **Contribution section:** Trimmed claims to what was actually delivered.
+  Removed C&S estimator contribution (not executed) and green investment
+  additionality contribution (not measured). Replaced with three honest
+  contributions: pre-registered design (methodological novelty), transparent
+  null with data diagnosis (data literacy), and ready-to-execute pipeline
+  (forward-looking value).  Moved to end of document, after Extensions.
+
+- **Extensions section:** Promoted to a named section above Contribution.
+  Reframed from "potential extensions" (speculative) to "extensions and next
+  steps" (concrete). EIB-internal data extension leads, quantified (200 NUTS-2
+  regions vs 27 countries; Bartik first stage would likely clear F > 10).
+  EIBIS section states explicitly that cs_estimation.py is already stubbed and
+  ready to execute on data arrival.
+
+**Result / output:**
+- README.md: 173 lines. Commit pending (index.lock cross-platform issue
+  resolved by running git from Windows terminal).
+
+**Next action:**
+None. Repository is complete for submission.
 
 ---
