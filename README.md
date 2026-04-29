@@ -61,7 +61,12 @@ Two additional splits test whether the null masks heterogeneity across financial
 
 The non-euro subsample coefficient is larger (+7.73 versus +2.58 in the euro area) and approaches significance (p = 0.15), consistent with the hypothesis that EIB has a stronger targeting rationale where financial markets are less integrated. However, the interaction term is not significant (p = 0.22), and with only 8 non-euro countries the estimate is noisy. The constraint-level split shows no meaningful difference; high-constraint and low-constraint countries both yield null results. Overall, the null targeting result is robust to all six tested robustness and heterogeneity checks.
 
-There is no evidence that EIB lending per SME is higher where financing constraints are worse at the country level. This is a genuine finding, not a measurement artifact. Possible explanations include: (a) targeting occurs within countries (regional, sectoral, or project-level) and is washed out in aggregate; (b) EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity; (c) the country-level constraint measure is too coarse to detect targeting that responds to within-country variation. With only 27 clusters, limited statistical power cannot be excluded as a partial explanation; the NUTS-2 extension would directly address this.
+Overall, there is no evidence that EIB lending per SME is higher where financing constraints are worse at the country level. Several robustness checks and heterogeneity analyses suggest, this may be a genuine finding, and not merely a measurement artifact. However, there are a number of alternative explanations this analysis cannot distinguish, including:
+
+1. Targeting occurs within countries (regional, sectoral, or project-level) and is washed out in aggregate
+2. EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity
+3. The country-level constraint measure is too coarse to detect targeting
+4. With only 27 clusters, limited statistical power cannot be excluded as a partial explanation; the NUTS-2 extension would directly address this.
 
 ### Do lagged EIB intensities predict subsequent SME outcomes?
 
@@ -76,7 +81,7 @@ The industry investment rate outcome is limited to NACE B+C+D+E (all firm sizes)
 
 We find no strong correlational evidence for a plausibility channel from EIB intensity to SME outcomes. The absence of a clear link is consistent with severe omitted-variable bias (EIB selects regions on unobservables), a true small effect, or coarse outcome measurement.
 
-### Can the Bartik instrument identify aggregate causal effects?
+### Can we exploit exogeneity in shifts to identify aggregate causal effects?
 
 #### Construction
 
