@@ -95,6 +95,28 @@ overwhelmed EIB's counter-cyclical role. The scatter cannot discriminate
 between targeting, growth confounds, and pandemic shocks; that is the purpose
 of the regression specification.
 
+**Cohesion eligibility reconstruction.**
+
+As a supplementary descriptive check, NUTS-2 region eligibility for EU cohesion
+funds was reconstructed from Eurostat GDP per capita in purchasing power
+standards (PPS, unit `PPS_EU27_2020_HAB`) using the official DG REGIO
+thresholds: less developed (< 75% of EU-27 average), transition (75–90%), and
+more developed (> 90%). The reconstruction covers 258 NUTS-2 regions across
+all 27 member states for the three programming periods (2007–2013, 2014–2020,
+2021–2027). 248 reclassification events occurred across periods, far exceeding
+the ≥15 threshold needed for event-study feasibility (Check 6: PASS). This
+confirms that the EU cohesion map is dynamic and that regional income
+convergence is an active process, though the public EIB Projects dataset lacks
+NUTS-2 codes, so this variation is not exploited in the current analysis.
+
+| Period | Less developed | Transition | More developed |
+|---|---|---|---|
+| 2007–2013 | 18 | 61 | 179 |
+| 2014–2020 | 2 | 61 | 195 |
+| 2021–2027 | 32 | 61 | 165 |
+
+Data: `data/raw/cohesion_eligibility.csv`. Method: `src/ingest/cohesion_from_eurostat.py`.
+
 **Targeting regression (Specification 1a/1b).**
 
 The pre-registered contemporaneous specification tests whether EIB lending

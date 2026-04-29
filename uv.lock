@@ -495,6 +495,7 @@ dependencies = [
     { name = "scipy" },
     { name = "seaborn" },
     { name = "statsmodels" },
+    { name = "wildboottest" },
 ]
 
 [package.dev-dependencies]
@@ -524,6 +525,7 @@ requires-dist = [
     { name = "scipy" },
     { name = "seaborn" },
     { name = "statsmodels" },
+    { name = "wildboottest", specifier = ">=0.3.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -2650,6 +2652,22 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/bd/f4/c67440c7fb409a71b7404b7aefcd7569a9c0d6bd071299bf4198ae7a5d95/widgetsnbextension-4.0.15.tar.gz", hash = "sha256:de8610639996f1567952d763a5a41af8af37f2575a41f9852a38f947eb82a3b9", size = 1097402, upload-time = "2025-11-01T21:15:55.178Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/3f/0e/fa3b193432cfc60c93b42f3be03365f5f909d2b3ea410295cf36df739e31/widgetsnbextension-4.0.15-py3-none-any.whl", hash = "sha256:8156704e4346a571d9ce73b84bee86a29906c9abfd7223b7228a28899ccf3366", size = 2196503, upload-time = "2025-11-01T21:15:53.565Z" },
+]
+
+[[package]]
+name = "wildboottest"
+version = "0.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numba" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "statsmodels" },
+    { name = "tabulate" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9c/4a/cca3fc48321c9c896b4c7db26cf44c1b54a77c3e0db0e622052a405b7b3a/wildboottest-0.3.2.tar.gz", hash = "sha256:f705e87c6bc5f8dfeca6a12edb666a744072c91b702cd4041560839eb4f2e418", size = 12848, upload-time = "2024-09-01T12:26:57.294Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b2/75/419e54d92b1b97128a12f8dcd53b40b5144a33a69026496287a3ab7557e4/wildboottest-0.3.2-py3-none-any.whl", hash = "sha256:886762642098358ddeb190656fc05c17e26d5c024ccff9f8863627ce3392902f", size = 12191, upload-time = "2024-09-01T12:26:54.783Z" },
 ]
 
 [[package]]

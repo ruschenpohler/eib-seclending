@@ -1216,3 +1216,38 @@ with richer geographic/firm-level data.
 - Decision: **Phase 2b is documented but does not support a causal claim.**
 
 ---
+
+## Session: 2026-04-29 — OpenCode — Cohesion eligibility reconstruction
+
+### 09:30 | phase1/check6 | STATUS: COMPLETE
+
+**What was done:**
+Reconstructed EU cohesion eligibility from Eurostat NUTS-2 GDP per capita in PPS
+(`nama_10r_2gdp`, unit `PPS_EU27_2020_HAB`). Script: `src/ingest/cohesion_from_eurostat.py`.
+Reference periods: 2004-2006 (2007-2013), 2007-2009 (2014-2020), 2015-2017
+(2021-2027). Classified 258 NUTS-2 regions across 27 EU countries using DG REGIO
+thresholds: <75% less developed, 75-90% transition, >90% more developed.
+
+**Result / output:**
+- `data/raw/cohesion_eligibility.csv`: 774 rows (258 regions x 3 periods)
+- `outputs/tables/phase1_cohesion_summary.csv`: category counts by period
+- Reclassification events: 248 (132 from 2007-2013 -> 2014-2020, 116 from
+  2014-2020 -> 2021-2027)
+- Check 6 pass criterion (>=15): PASS
+
+**Decision made:**
+Cohesion eligibility was reclassified from a blocking feasibility check to an
+optional descriptive extension (2026-04-28 human decision). The reconstruction
+confirms sufficient variation for event-study designs, but the public EIB
+Projects dataset contains no NUTS-2 codes, so cohesion variation is not
+exploited in the current analysis. Results added to README.md as supplementary
+descriptive check.
+
+**Problem encountered:**
+Windows console encoding (cp1252) failed on Unicode arrows and >= symbol.
+Fixed by replacing with ASCII equivalents in print statements.
+
+**Next action:**
+Final README polish, commit all changes, call repo complete for Phase 1 submission.
+
+---
