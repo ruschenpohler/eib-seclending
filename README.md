@@ -1,6 +1,6 @@
 # EIB SME Lending and Financing Constraints: Country-Level Evidence
 
-Whether EIB climate-tagged intermediated lending changes firm behavior — or merely relabels financial flows that would have occurred anyway — is an important open question for EIB's own additionality framework. A complete answer requires firm-level panel data. This paper takes the first step available with public data: testing whether EIB per-SME lending is systematically higher where financing constraints are most acute, and whether a Bartik shift-share instrument can identify aggregate causal effects on those constraints. Both tests yield null results at the country level. The diagnosis is clear: the public EIB Projects dataset has no sub-national geographic codes, which limits analysis to 27 country-year units and makes Bartik identification structurally underpowered. The planned extensions — with EIB-internal regional data or EIBIS microdata — would resolve both limitations, and the analysis pipeline is already built and pre-registered for them.
+EIB intermediated SME lending is premised on correcting financing market failures: regions where SMEs face more severe financing obstacles should attract more EIB support, and that support should ease those constraints. This paper tests both claims using country-level panel data and only public data sources. The targeting regression asks whether EIB per-SME lending is systematically higher where constraints are most acute; the Bartik shift-share instrument asks whether exogenous variation in EIB sectoral exposure causally reduces those constraints. Both tests yield null results at the country level. The diagnosis is the same in both cases: the public EIB Projects dataset has no sub-national geographic codes, which limits analysis to 27 country-year units and makes Bartik identification structurally underpowered. The planned extensions — with EIB-internal regional data or EIBIS microdata — would resolve both limitations, and the analysis pipeline is already built and pre-registered for them.
 
 The empirical design was pre-registered before any data was downloaded, using Git's content-addressing as a lightweight but cryptographically verifiable pre-registration mechanism. All primary specifications, expected coefficient signs, and the primary/secondary designation for every estimating equation are committed at a fixed, publicly visible hash that cannot be altered retroactively.
 
@@ -160,9 +160,4 @@ uv sync
 uv run python src/ingest/eib_projects.py
 
 # Run a notebook
-uv run jupyter notebook
-```
-
-## References
-
-Gelman, A. and Hill, J. (2007). *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.
+uv run jupy
