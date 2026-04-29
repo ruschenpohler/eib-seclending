@@ -10,23 +10,24 @@ EIB intermediated SME lending is premised on correcting financing market failure
 > Pre-analysis plan: [`f0313ba8ae0a293c36e2efbb581512e5c69cfbcd`](https://github.com/ruschenpohler/eib-seclending/blob/f0313ba8ae0a293c36e2efbb581512e5c69cfbcd/prespec-plan.md)
 > · [Commit timestamp](https://github.com/ruschenpohler/eib-seclending/commit/f0313ba8ae0a293c36e2efbb581512e5c69cfbcd)
 
-### A note on statistical power
+### Constraint geography and macro co-movement
 
-All regressions operate at the country level (EU-27 member states, roughly 120 to 160 observations). With 27 clusters, cluster-robust standard errors are noisy and wild cluster bootstrap is essential. The null targeting result and weak plausibility result may reflect thin variation as much as a true zero effect. Against this concern, descriptive patterns that align with basic theory provide face-validity reassurance that the data are not nonsensical. These patterns are highlighted below.
+With regressions confined to 27 EU member state clusters, the raw patterns in the data carry extra weight as a face-validity check. The geographic distribution of financing constraints aligns with textbook market-failure geography: Southern and Eastern Europe (Cyprus, Greece, Croatia, Bulgaria, Romania, Hungary, Portugal) report the highest shares of SMEs ranking access to finance as their main obstacle, while Northern and Western Europe (Denmark, Netherlands, Germany, Austria, Luxembourg, Sweden, Finland) report the lowest. This validates the constraint measure as a plausible indicator of financing-gap severity.
 
-### Descriptive patterns
+![](outputs/figures/constraint_map.png)
+*Figure 1: Financing constraint severity by country, 2015–2021 mean (ECB SAFE). Constraint shares are highest in Southern and Eastern Europe and lowest in Northern and Western Europe — consistent with well-documented differences in financial market development.*
 
-The geographic distribution of financing constraints (`outputs/figures/constraint_map.png`) aligns with textbook market-failure geography. Southern and Eastern Europe (Cyprus, Greece, Croatia, Bulgaria, Romania, Hungary, Portugal) report the highest shares of SMEs ranking access to finance as their main obstacle, while Northern and Western Europe (Denmark, Netherlands, Germany, Austria, Luxembourg, Sweden, Finland) report the lowest. This validates the constraint measure as a plausible indicator of financing-gap severity.
+Time-series trends show two notable patterns. First, a parallel pre-COVID decline: both mean EIB intensity and mean constraint severity fell from 2015 to 2018, then partly recovered into 2019. The co-movement is consistent with both series responding to the same macroeconomic driver — falling interest rates and ECB quantitative easing reduced financing constraints while also compressing demand for intermediated EIB credit — rather than EIB responding specifically to constraint severity. This shared macro sensitivity is consistent with the null targeting result. Second, the 2020 co-movement (both EIB intensity and constraints spiked) illustrates the confounding role of COVID-19, which the fixed-effects specification absorbs only imperfectly. Country-level facets show the same patterns for selected member states.
 
-![Financing constraints by country, 2015–2021 mean (ECB SAFE)](outputs/figures/constraint_map.png)
+![](outputs/figures/timeseries.png)
+*Figure 2: Mean EIB lending intensity and financing constraint share, EU-27 averages 2015–2021. Both series decline in parallel through 2018 then co-spike in 2020, consistent with a shared macro driver rather than EIB responding specifically to constraint severity.*
 
-Time-series trends (`outputs/figures/timeseries.png`) show two notable patterns. First, a parallel pre-COVID decline: both mean EIB intensity and mean constraint severity fell from 2015 to 2018, then partly recovered into 2019. The co-movement is consistent with both series responding to the same macroeconomic driver — falling interest rates and ECB quantitative easing reduced financing constraints while also compressing demand for intermediated EIB credit — rather than EIB responding specifically to constraint severity. This shared macro sensitivity is consistent with the null targeting result. Second, the 2020 co-movement (both EIB intensity and constraints spiked) illustrates the confounding role of COVID-19, which the fixed-effects specification absorbs only imperfectly. Country-level facets (`outputs/figures/timeseries_byCountry.png`) show the same patterns for selected member states.
+The year-on-year scatter of changes in EIB intensity versus changes in constraints shows a weak positive correlation (r = +0.215). Outliers are dominated by small-country volatility: Slovenia 2016 saw EIB per SME collapse by EUR 96,000 following an anomalously large 2015 commitment (likely a single project), while constraints fell independently. Italy 2020 and Germany 2020 show constraints spiking while EIB rose only modestly; the COVID credit crunch overwhelmed EIB's counter-cyclical role. The scatter cannot discriminate between targeting, growth confounds, and pandemic shocks; that is the purpose of the regression specification.
 
-![EIB lending intensity and financing constraints, EU-27 averages 2015–2021](outputs/figures/timeseries.png)
+![](outputs/figures/delta_scatter.png)
+*Figure 3: Year-on-year changes in EIB lending intensity versus financing constraints, 131 country-year observations 2016–2021 (r = +0.215). Outliers reflect single-project small-country volatility; the 2020 COVID shock drives the upper-half cluster.*
 
-The year-on-year scatter of changes in EIB intensity versus changes in constraints (`outputs/figures/delta_scatter.png`) shows a weak positive correlation (+0.215). Outliers are dominated by small-country volatility. Slovenia 2016, for example, saw EIB per SME collapse by EUR 96,000 following an anomalously large 2015 commitment (likely a single project), while constraints fell independently. Conversely, Italy 2020 and Germany 2020 show constraints spiking while EIB rose only modestly; the COVID credit crunch overwhelmed EIB's counter-cyclical role. The scatter cannot discriminate between targeting, growth confounds, and pandemic shocks; that is the purpose of the regression specification.
-
-![Annual changes in EIB lending intensity vs. financing constraints, 131 country-year observations](outputs/figures/delta_scatter.png)
+### Regional variation and the limits of public data
 
 As a supplementary descriptive, NUTS-2 region eligibility for EU cohesion funds was reconstructed from Eurostat GDP per capita in purchasing power standards using the official DG REGIO thresholds: less developed (below 75% of the EU-27 average), transition (75% to 90%), and more developed (above 90%). The reconstruction covers 258 NUTS-2 regions across all 27 member states for three programming periods. 248 reclassification events occurred across periods, confirming that the EU cohesion map is dynamic and that regional income convergence is an active process. The public EIB Projects dataset lacks NUTS-2 codes, so this variation is not exploited in the current analysis.
 
@@ -39,6 +40,8 @@ As a supplementary descriptive, NUTS-2 region eligibility for EU cohesion funds 
 Data: `data/raw/cohesion_eligibility.csv`. Method: `src/ingest/cohesion_from_eurostat.py`.
 
 ### Does EIB lending target regions with worse financing constraints?
+
+All regressions operate on at most 160 country-year observations across 27 EU member state clusters. With so few clusters, cluster-robust standard errors are unreliable; wild cluster bootstrap (WCB — 999 reps, Rademacher weights) is used throughout.
 
 The pre-registered contemporaneous specification tests whether EIB lending per SME co-varies with the severity of financing constraints within country-year cells, controlling for GDP per capita, country fixed effects, year fixed effects, and a COVID-19 indicator:
 
@@ -68,7 +71,7 @@ Two additional splits test whether the null masks heterogeneity across financial
 
 The non-euro subsample coefficient is larger (+7.73 versus +2.58 in the euro area) and approaches significance (p = 0.15), consistent with the hypothesis that EIB has a stronger targeting rationale where financial markets are less integrated. However, the interaction term is not significant (p = 0.22), and with only 8 non-euro countries the estimate is noisy. The constraint-level split shows no meaningful difference; high-constraint and low-constraint countries both yield null results. Overall, the null targeting result is robust to all six tested robustness and heterogeneity checks.
 
-There is no evidence that EIB lending per SME is higher where financing constraints are worse at the country level. This is a genuine finding, not a measurement artifact. Possible explanations include: (a) targeting occurs within countries (regional, sectoral, or project-level) and is washed out in aggregate; (b) EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity; (c) the country-level constraint measure is too coarse to detect targeting that responds to within-country variation.
+There is no evidence that EIB lending per SME is higher where financing constraints are worse at the country level. This is a genuine finding, not a measurement artifact. Possible explanations include: (a) targeting occurs within countries (regional, sectoral, or project-level) and is washed out in aggregate; (b) EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity; (c) the country-level constraint measure is too coarse to detect targeting that responds to within-country variation. With only 27 clusters, limited statistical power cannot be excluded as a partial explanation; the NUTS-2 extension would directly address this.
 
 ### Do lagged EIB intensities predict subsequent SME outcomes?
 
