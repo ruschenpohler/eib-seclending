@@ -1343,3 +1343,46 @@ Specific changes:
 None. Repository is complete for submission.
 
 ---
+
+
+## Session: 2026-04-29 — OpenCode — Feedback implementation (README_crit-op47)
+
+### 14:30 | analysis/feedback | STATUS: COMPLETE
+
+**What was done:**
+Implemented all five items from feedback document ideas/README_crit-op47.md:
+
+1. **Between-country estimator** (src/analysis/targeting_between.py):
+   Collapsed panel to country means, ran OLS with HC3 SEs.
+   Result: beta=+6.13, SE=2.34, p=0.009, 95% CI=[+1.5, +10.7].
+   Significant cross-sectional targeting: countries with worse average
+   constraints receive more EIB lending on average.
+
+2. **CIs and MDE** (src/analysis/add_cis_and_mde.py):
+   Added 95% CI columns to all targeting tables.
+   MDE at 80% power for contemporaneous spec: 9.6 pp constraint share
+   per log point EIB/SME.
+   Replaced 'null' framing with 'not statistically distinguishable from
+   zero' and 'uninformative' throughout README.
+
+3. **Moved plausibility regression to appendix** (outputs/tables/appendix_outcomes.md):
+   Removed main results section. Added 1-2 sentence reference in targeting
+   section. Appendix explains denominator mismatches and short panel.
+
+4. **Reconciled heterogeneity interaction terms** (README footnote):
+   Added footnote explaining interaction models use pooled sample with
+   common controls, not equivalent to subsample decompositions.
+   Clarified sign consistency for B4 (low constraint = base category).
+
+5. **BHJ shift-share diagnostics** (src/analysis/bhj_diagnostics.py):
+   Effective shock count: 6.1 (inverse Herfindahl) vs 12 nominal shocks.
+   Added paragraph to README shift-share section.
+
+**Result / output:**
+- Commit: ccf3ae0
+- All five items implemented and pushed to remote.
+
+**Next action:**
+None. Repository updated per feedback.
+
+---
