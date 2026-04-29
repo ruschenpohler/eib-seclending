@@ -83,6 +83,8 @@ We find no strong correlational evidence for a plausibility channel from EIB int
 
 ### Can we exploit exogeneity in shifts to identify aggregate causal effects?
 
+The targeting regressions show no within-country-year association between EIB intensity and constraint severity, but they say nothing about causality in the opposite direction: does EIB lending reduce financing constraints? OLS is uninformative here because EIB may respond to unobserved country characteristics and because common macroeconomic shocks drive both series. We therefore turn to a shift-share instrument, exploiting the fact that EU-aggregate EIB sectoral allocations — the shifts — are set at the portfolio level and are plausibly exogenous to any individual country's financing conditions. Countries inherit differential EIB exposure depending on whether their pre-existing industrial structure happened to be concentrated in sectors that subsequently received large EU-level commitments.
+
 #### Construction
 
 The Bartik instrument is constructed exactly as pre-registered:
@@ -153,3 +155,4 @@ eib-seclending/
 ```
 
 ## Environment
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
