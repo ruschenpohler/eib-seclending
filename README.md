@@ -27,18 +27,6 @@ The year-on-year scatter of changes in EIB intensity versus changes in constrain
 ![](outputs/figures/delta_scatter.png)
 *Figure 3: Year-on-year changes in EIB lending intensity versus financing constraints, 131 country-year observations 2016–2021 (r = +0.215). Outliers reflect single-project small-country volatility; the 2020 COVID shock drives the upper-half cluster.*
 
-### Regional variation and the limits of public data
-
-As a supplementary descriptive, NUTS-2 region eligibility for EU cohesion funds was reconstructed from Eurostat GDP per capita in purchasing power standards using the official DG REGIO thresholds: less developed (below 75% of the EU-27 average), transition (75% to 90%), and more developed (above 90%). The reconstruction covers 258 NUTS-2 regions across all 27 member states for three programming periods. 248 reclassification events occurred across periods, confirming that the EU cohesion map is dynamic and that regional income convergence is an active process. The public EIB Projects dataset lacks NUTS-2 codes, so this variation is not exploited in the current analysis.
-
-| Period | Less developed | Transition | More developed |
-|---|---|---|---|
-| 2007–2013 | 18 | 61 | 179 |
-| 2014–2020 | 2 | 61 | 195 |
-| 2021–2027 | 32 | 61 | 165 |
-
-Data: `data/raw/cohesion_eligibility.csv`. Method: `src/ingest/cohesion_from_eurostat.py`.
-
 ### Does EIB lending target regions with worse financing constraints?
 
 All regressions operate on at most 160 country-year observations across 27 EU member state clusters. With so few clusters, cluster-robust standard errors are unreliable; wild cluster bootstrap (WCB — 999 reps, Rademacher weights) is used throughout.
