@@ -83,7 +83,7 @@ We find no strong correlational evidence for a plausibility channel from EIB int
 
 ### Can we exploit exogeneity in shifts to identify aggregate causal effects?
 
-The targeting regressions show no within-country-year association between EIB intensity and constraint severity, but they say nothing about causality in the opposite direction: does EIB lending reduce financing constraints? OLS is uninformative here because EIB may respond to unobserved country characteristics and because common macroeconomic shocks drive both series. We therefore turn to a shift-share instrument, exploiting the fact that EU-aggregate EIB sectoral allocations — the shifts — are set at the portfolio level and are plausibly exogenous to any individual country's financing conditions. Countries inherit differential EIB exposure depending on whether their pre-existing industrial structure happened to be concentrated in sectors that subsequently received large EU-level commitments.
+The targeting regressions show no within-country-year association between EIB intensity and constraint severity. But OLS is uninformative on the causal question of whether EIB lending reduces financing constraints because reverse causality and common macroeconomic shocks both confound the estimate. We therefore turn to a shift-share instrument, following Borusyak, Hull, and Jaravel (2022). We posit that EU-aggregate EIB commitments are set by EIB board-level portfolio decisions *at the level of a sector* and across the EU *as a whole* (energy transition, infrastructure, innovation priorities) and are hence plausibly exogenous to any individual country's financing conditions. Countries inherit differential EIB exposure depending on whether their pre-existing industrial structure happened to be concentrated in sectors that subsequently received large EU-level commitments.
 
 #### Construction
 
@@ -133,7 +133,7 @@ An alternative Bartik construction would use EU-level green investment growth by
 
 ## Contribution relative to existing literature
 
-Amamou et al. (2020) use propensity-score matching with difference-in-differences and find positive employment effects of EIB lending, but cannot address staggered adoption or test the green investment mechanism. Barbera et al. (2022) use a generalized propensity score for continuous treatment intensity but rely on the same matching identification. This project contributes in three respects: a pre-registered design that cannot be adjusted post-hoc (a methodological novelty for EIB evaluation work); a transparent diagnosis of why country-level public data cannot resolve targeting or causal identification (data literacy with an actionable remedy); and a ready-to-execute pipeline for the Callaway-Sant'Anna firm-level test that would be the first pre-registered causal estimate of EIB green investment additionality.
+Amamou, Gereben, and Wolski (2020) use propensity-score matching with difference-in-differences and find positive employment and investment effects of EIB intermediated lending, but cannot address staggered adoption or test the green investment mechanism. Barbera, Gereben, and Wolski (2022) estimate heterogeneous treatment effects using a generalized propensity score for continuous treatment intensity, again finding positive employment and investment effects, but rely on the same matching identification strategy. This project contributes in three respects: a pre-registered design that cannot be adjusted post-hoc (a methodological novelty for EIB evaluation work); a transparent diagnosis of why country-level public data cannot resolve targeting or causal identification (data literacy with an actionable remedy); and a ready-to-execute pipeline for the Callaway and Sant'Anna (2021) staggered difference-in-differences estimator that, once EIBIS access is granted, would yield the first pre-registered causal estimate of EIB green investment additionality.
 
 ---
 
@@ -155,3 +155,24 @@ eib-seclending/
 ```
 
 ## Environment
+
+Managed with `uv`. Reproduce with:
+
+```bash
+uv sync
+uv run python src/analysis/<script>.py
+```
+
+---
+
+## References
+
+Amamou, R., Gereben, Á., & Wolski, M. (2020). Making a difference: Assessing the impact of the EIB's funding to SMEs. *EIB Working Paper 2020/04*, European Investment Bank.
+
+Barbera, A., Gereben, Á., & Wolski, M. (2022). Estimating conditional treatment effects of EIB lending to SMEs in Europe. *EIB Working Paper 2022/03*, European Investment Bank. Also published as *BIS Working Papers* 1006.
+
+Borusyak, K., Hull, P., & Jaravel, X. (2022). Quasi-experimental shift-share research designs. *The Review of Economic Studies*, 89(1), 181–213.
+
+Callaway, B., & Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. *Journal of Econometrics*, 225(2), 200–230.
+
+Gelman, A., & Hill, J. (2007). *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.
