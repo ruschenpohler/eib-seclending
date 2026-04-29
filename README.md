@@ -87,7 +87,7 @@ The targeting regressions show no within-country-year association between EIB in
 
 #### Construction
 
-The Bartik instrument is constructed exactly as pre-registered:
+The shift-share instrument is constructed exactly as pre-registered:
 
 $$B_{rt} = \sum_j s_{jr,2015} \cdot L_{jt}$$
 
@@ -101,21 +101,21 @@ $$\log(E_{rt}) = \pi \cdot B_{rt} + \gamma \cdot \log(G_{rt}) + \delta_r + \thet
 
 | Coefficient | Estimate | SE | t | p | F-statistic |
 |---|---|---|---|---|---|
-| Bartik | 1.72×10⁻⁹ | 1.10×10⁻⁹ | 1.56 | 0.130 | **2.45** |
+| Shift-share | 1.72×10⁻⁹ | 1.10×10⁻⁹ | 1.56 | 0.130 | **2.45** |
 
 #### The instrument is too weak at the country level to support a causal claim
 
-The first-stage Kleibergen-Paap F-statistic is 2.45, far below the conventional threshold of 10. This is a structural feature of working with only 27 geographic units; the Bartik shift-share design requires more granular variation to generate sufficient first-stage power. The public EIB Projects dataset contains no NUTS-2 codes, so regional-level analysis is not feasible with public data alone. Per the pre-registered protocol, the 2SLS second stage is not reported as causal. The instrument and code are documented and saved for use once regional-level data become available.
+The first-stage Kleibergen-Paap F-statistic is 2.45, far below the conventional threshold of 10. This is a structural feature of working with only 27 geographic units as a shift-share design requires more granular variation to generate sufficient first-stage power. The public EIB Projects dataset contains no NUTS-2 codes, so regional-level analysis is not feasible with public data alone. Per the pre-registered protocol, the 2SLS second stage is not reported as causal. The instrument and code are documented and saved for use once regional-level data become available.
 
 ---
 
 ## Extensions and next steps
 
-The null targeting result and the weak Bartik instrument share a common root: the public EIB dataset resolves only to the country level. Both limitations would be substantially addressed with either EIB-internal regional data or EIBIS microdata — and the analysis pipeline is already built for both. The extensions below represent the natural continuation of this work, not speculative additions.
+The null targeting result and the weak shift-share instrument share a common root: the public EIB dataset resolves only to the country level. Both limitations would be substantially addressed with either EIB-internal regional data or EIBIS microdata — and the analysis pipeline is already built for both. The extensions below represent the natural continuation of this work, not speculative additions.
 
 #### EIB-internal data with NUTS-2 granularity
 
-EIB-internal systems contain NUTS-2 or NUTS-3 region codes for each project, enabling analysis across roughly 200 regions rather than 27 countries. With that variation, the Bartik first stage would very likely clear the F > 10 threshold; NUTS-2 employment shares and project-level intermediated-operation flags would also align the numerator (EIB volume) with the SME denominator more precisely. Regional-level targeting regressions would test whether the null country-level result masks within-country variation — the most substantively important open question from the current analysis. Access would require an EIB collaboration agreement or secondment.
+EIB-internal systems contain NUTS-2 or NUTS-3 region codes for each project, enabling analysis across roughly 200 regions rather than 27 countries. With that variation, the shift-share first stage could plausibly clear the F > 10 threshold. NUTS-2 employment shares and project-level intermediated-operation flags would also align the numerator (EIB volume) with the SME denominator more precisely. Regional-level targeting regressions would test whether the null country-level result masks within-country variation — the most substantively important open question from the current analysis. Access would require an EIB collaboration agreement or secondment.
 
 #### EIBIS microdata for firm-level causal inference
 
@@ -127,7 +127,7 @@ A known limitation of country-level analysis is that small countries (Luxembourg
 
 #### Sectoral green-investment shift shares
 
-An alternative Bartik construction would use EU-level green investment growth by sector (from Eurostat or the IEA) as the shift variable, rather than EIB sectoral lending volumes. This would test whether regions with industrial structures tilted toward fast-growing green sectors receive more EIB support. Because green sector growth also affects firm green investment directly through industrial composition, this is a descriptive exercise rather than a causal instrument — but it would be informative about EIB's thematic alignment with the green transition.
+An alternative shift-share construction would use EU-level green investment growth by sector (from Eurostat or the IEA) as the shifter, rather than EIB sectoral lending volumes. This would test whether regions with industrial structures tilted toward fast-growing green sectors receive more EIB support. Because green sector growth also affects firm green investment directly through industrial composition, this is a more descriptive exercise rather than a causal instrument, but it would be informative about EIB's thematic alignment with the green transition.
 
 ---
 
