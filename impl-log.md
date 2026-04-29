@@ -1251,3 +1251,34 @@ Fixed by replacing with ASCII equivalents in print statements.
 Final README polish, commit all changes, call repo complete for Phase 1 submission.
 
 ---
+
+
+## Session: 2026-04-29 — OpenCode — README rewrite and final polish
+
+### 11:15 | docs/readme | STATUS: COMPLETE
+
+**What was done:**
+Major rewrite of README.md for narrative coherence, removing all internal
+labels and agent-facing language. Changes:
+- Removed all Phase labels (Phase 1, Phase 2b), specification labels (Spec 1a/1b,
+  Spec 2), check labels (B3/B4, Check 6)
+- Replaced technical sub-headers with descriptive questions
+- Made key findings descriptive first, technical second
+- Removed notes to self / agent notes ('For future work: Do not tweak...')
+- Replaced em-dashes in running prose with commas, periods, semicolons
+- Resolved bold usage: reserve for block-quote emphasis and table highlights;
+  use #### headers for sub-sections
+- Fixed Bayesian hierarchical models section: trimmed methodological aside,
+  added Gelman & Hill citation, added References section, linked
+  bayesian-segmentation repo in-text
+- Deleted draft wild bootstrap scripts (wild_bootstrap.py, wild_bootstrap_manual.py)
+- Fixed markdown table separator alignment
+
+**Result / output:**
+- README.md: 172 lines, rewritten from scratch
+- Commit: 9077cb7
+
+**Next action:**
+Push to remote. Repo is complete for Phase 1 submission.
+
+---
