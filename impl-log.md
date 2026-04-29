@@ -968,6 +968,52 @@ Proceed to Bartik instrument construction (Spec 3, Phase 2b).
 
 ---
 
+### 00:15 | phase1/check6 | STATUS: AWAITING HUMAN — DG REGIO COHESION PDFs
+
+**What is needed:**
+Cohesion eligibility data for NUTS-2 regions across three programming periods
+(2007-2013, 2014-2020, 2021-2027). Source: DG REGIO PDF annexes to cohesion
+regulations. Manual extraction into CSV required.
+
+**Script ready:** `src/ingest/cohesion.py` — validates schema, counts
+reclassifications, generates summary table.
+
+**Expected CSV schema:** `nuts2_code, nuts2_name, country, period, category`
+where category ∈ {less_developed, transition, more_developed}
+
+**URLs to check (DG REGIO cohesion eligibility lists):**
+
+1. **DG REGIO data portal (recommended starting point):**
+   https://ec.europa.eu/regional_policy/en/policy/how/data/
+
+2. **2021-2027 programming period:**
+   Annex I to Regulation (EU) 2021/1060 (Common Provisions Regulation)
+   Look for: NUTS-2 region eligibility list
+
+3. **2014-2020 programming period:**
+   Annex I to Regulation (EU) No 1303/2013
+   Known PDF: https://ec.europa.eu/regional_policy/sources/docgener/informat/2014/annex_en.pdf
+   (verify this URL — may have changed)
+
+4. **2007-2013 programming period:**
+   Annex to Regulation (EC) No 1083/2006 (General Regulation)
+   Known PDF: https://ec.europa.eu/regional_policy/sources/docgener/informat/2007/annex_en.pdf
+   (verify this URL — may have changed)
+
+**What to extract from each PDF:**
+For every NUTS-2 region listed, record:
+- `nuts2_code` (e.g., "DEA1", "FR10")
+- `nuts2_name` (region name)
+- `country` (ISO-2 or full name)
+- `period` (one of: "2007-2013", "2014-2020", "2021-2027")
+- `category` (one of: "less_developed", "transition", "more_developed")
+
+**Save as:** `data/raw/cohesion_eligibility.csv`
+
+**Waiting for:** Human to download PDFs, extract data, and save CSV.
+
+---
+
 ### 23:00 | phase2/research | STATUS: EIBIS MICRODATA ACCESS RESEARCH COMPLETE
 
 **What was researched:**
