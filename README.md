@@ -134,11 +134,12 @@ where $E_{rt}$ = EIB volume per SME, $C_{rt}$ = constraint share, $G_{rt}$ = GDP
 | 1b — Lagged (t−1) | −0.19 | 2.25 | 0.933 | 133 | Null |
 
 Both coefficients are positive in the contemporaneous case and near-zero
-negative in the lagged case, but neither is statistically significant. The
-null is robust across four first-order robustness checks (A1–C1): alternative
-constraint intensity measure (Q0b mean score, p = 0.79), excluding 2020
-(p = 0.43), high-income subsample (p = 0.42), and low-income subsample
-(p = 0.23).
+negative in the lagged case, but neither is statistically significant. Wild
+cluster bootstrap p-values (999 reps, Rademacher weights) confirm the null:
+1a p = 0.328, 1b p = 0.901. The null is robust across four first-order
+robustness checks (A1–C1): alternative constraint intensity measure (Q0b mean
+score, p = 0.79), excluding 2020 (p = 0.43), high-income subsample (p = 0.42),
+and low-income subsample (p = 0.23).
 
 **Heterogeneity checks (B3 and B4).** Two additional splits test whether the
 null masks heterogeneity across financially integrated vs. less integrated
@@ -190,6 +191,9 @@ Both outcomes are winsorised at the 1st and 99th percentile. Cross-region
 placebo regressions (substituting leave-one-out average EIB intensity) yield
 null results, suggesting the weak entry-rate co-movement is country-specific
 rather than driven by a common eurozone factor.
+
+Wild cluster bootstrap p-values confirm the null: investment rate p = 0.600,
+entry rate p = 0.402.
 
 **Interpretation:** No strong correlational evidence for a plausibility
 channel from EIB intensity to SME outcomes. The absence of a clear link is
@@ -271,7 +275,7 @@ root cause: the public EIB Projects Financed dataset lacks sub-national
 location (NUTS-2 coverage = 0%) and does not distinguish between direct and
 intermediated operations at the project level beyond a coarse sector flag.
 EIB-internal systems (e.g., the EIB Group Client Portal, project management
- databases) contain:
+databases) contain:
 
 - **NUTS-2 or NUTS-3 region codes** for each project, enabling regional-level
   analysis with ~200+ regions rather than 27 countries;
