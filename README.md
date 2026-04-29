@@ -2,7 +2,7 @@
 
 ## Abstract
 
-EIB intermediated SME lending is premised on correcting financing market failures. Regions where SMEs face more severe financing obstacles should attract more EIB support, and that support should ease constraints. This project tests both claims using country-level panel data from the public EIB Projects dataset against a set of pre-registered analysis. Targeting regressions ask whether EIB per-SME lending is systematically higher where constraints are most acute. We find null results that survive several robustness checks and heterogeneity analysis. Employing a shift-share instrument, we ask whether exogenous variation in EIB sectoral exposure causally reduces those constraints but find the instrument to be weak at the country-level, and so we put little credence in these results. We caveat our findings by noting that because the EIB Projects data has no sub-national geographic codes, analysis is limited to 27 countries and hence statistical power low. Planned extensions outlined towards the end (working with EIB-internal regional data or EIBIS microdata) would resolve these limitations, and the needed analysis pipeline has already been set up and pre-registered. We see a contribution in our use of Git's content-addressing as a lightweight but cryptographically verifiable pre-registration mechanism before data access. All primary specifications, expected coefficient signs, and the primary/secondary designation for every estimating equation, including analysis extensions, were committed at a fixed, publicly visible hash that cannot be altered retroactively.
+EIB intermediated SME lending is premised on correcting financing market failures. Regions where SMEs face more severe financing obstacles should attract more EIB support, and that support should ease constraints. This project tests both claims using country-level panel data from the public EIB Projects dataset against pre-registered specifications. Targeting regressions ask whether EIB per-SME lending is systematically higher where constraints are most acute. We find null results that survive several robustness checks and heterogeneity analysis. Employing a shift-share instrument, we ask whether exogenous variation in EIB sectoral exposure causally reduces those constraints but find the instrument to be weak at the country-level, and so we put little credence in these results. We caveat our findings by noting that because the EIB Projects data has no sub-national geographic codes, analysis is limited to 27 countries and hence statistical power low. Planned extensions outlined towards the end (working with EIB-internal regional data or EIBIS microdata) would resolve these limitations, and the needed analysis pipeline has already been set up and pre-registered. A further contribution is our use of Git's content-addressing as a lightweight but cryptographically verifiable pre-registration mechanism before data access. All primary specifications, expected coefficient signs, and the primary/secondary designation for every estimating equation, including analysis extensions, were committed at a fixed, publicly visible hash that cannot be altered retroactively.
 
 ## Results
 
@@ -18,9 +18,15 @@ All regressions operate at the country level (EU-27 member states, roughly 120 t
 
 The geographic distribution of financing constraints (`outputs/figures/constraint_map.png`) aligns with textbook market-failure geography. Southern and Eastern Europe (Cyprus, Greece, Croatia, Bulgaria, Romania, Hungary, Portugal) report the highest shares of SMEs ranking access to finance as their main obstacle, while Northern and Western Europe (Denmark, Netherlands, Germany, Austria, Luxembourg, Sweden, Finland) report the lowest. This validates the constraint measure as a plausible indicator of financing-gap severity.
 
-Time-series trends (`outputs/figures/timeseries.png`) show two notable patterns. First, a pre-COVID inverse relationship: mean EIB intensity rose steadily from 2015 to 2019 (peaking around InvestEU preparation) while mean constraint severity fell steadily over the same period (ECB quantitative easing, low interest rates). This inverse trend is consistent with the null targeting regression; EIB lending grew even as financing gaps narrowed, suggesting EIB responds to factors other than constraint severity. Second, the 2020 co-movement (both EIB intensity and constraints spiked) illustrates the confounding role of COVID-19, which the fixed-effects specification absorbs only imperfectly. Country-level facets (`outputs/figures/timeseries_byCountry.png`) show the same patterns for selected member states.
+![Financing constraints by country, 2015–2021 mean (ECB SAFE)](outputs/figures/constraint_map.png)
+
+Time-series trends (`outputs/figures/timeseries.png`) show two notable patterns. First, a parallel pre-COVID decline: both mean EIB intensity and mean constraint severity fell from 2015 to 2018, then partly recovered into 2019. The co-movement is consistent with both series responding to the same macroeconomic driver — falling interest rates and ECB quantitative easing reduced financing constraints while also compressing demand for intermediated EIB credit — rather than EIB responding specifically to constraint severity. This shared macro sensitivity is consistent with the null targeting result. Second, the 2020 co-movement (both EIB intensity and constraints spiked) illustrates the confounding role of COVID-19, which the fixed-effects specification absorbs only imperfectly. Country-level facets (`outputs/figures/timeseries_byCountry.png`) show the same patterns for selected member states.
+
+![EIB lending intensity and financing constraints, EU-27 averages 2015–2021](outputs/figures/timeseries.png)
 
 The year-on-year scatter of changes in EIB intensity versus changes in constraints (`outputs/figures/delta_scatter.png`) shows a weak positive correlation (+0.215). Outliers are dominated by small-country volatility. Slovenia 2016, for example, saw EIB per SME collapse by EUR 96,000 following an anomalously large 2015 commitment (likely a single project), while constraints fell independently. Conversely, Italy 2020 and Germany 2020 show constraints spiking while EIB rose only modestly; the COVID credit crunch overwhelmed EIB's counter-cyclical role. The scatter cannot discriminate between targeting, growth confounds, and pandemic shocks; that is the purpose of the regression specification.
+
+![Annual changes in EIB lending intensity vs. financing constraints, 131 country-year observations](outputs/figures/delta_scatter.png)
 
 As a supplementary descriptive, NUTS-2 region eligibility for EU cohesion funds was reconstructed from Eurostat GDP per capita in purchasing power standards using the official DG REGIO thresholds: less developed (below 75% of the EU-27 average), transition (75% to 90%), and more developed (above 90%). The reconstruction covers 258 NUTS-2 regions across all 27 member states for three programming periods. 248 reclassification events occurred across periods, confirming that the EU cohesion map is dynamic and that regional income convergence is an active process. The public EIB Projects dataset lacks NUTS-2 codes, so this variation is not exploited in the current analysis.
 
@@ -149,15 +155,3 @@ eib-seclending/
 ```
 
 ## Environment
-
-This project uses `uv` for Python environment management.
-
-```bash
-# Setup (run once)
-uv sync
-
-# Run a script
-uv run python src/ingest/eib_projects.py
-
-# Run a notebook
-uv run jupy
