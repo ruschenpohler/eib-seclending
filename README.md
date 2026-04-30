@@ -2,7 +2,7 @@
 
 ## Note
 
-This research output was produced using the [MEGA-CAS Platform](https://github.com/ruschenpohler/agent-ml-platform-wp) (Mechanistically Enforced, Governed, and Audited Content-Addressed-Storage Platform) for trustworthy Human-Agent Research Production.
+This research output was produced using the [MEGA-CAS Platform](https://github.com/ruschenpohler/agent-ml-platform-wp) (Mechanistically Enforced, Governed, and Audited Content-Addressed-Storage Platform) for trustworthy human-agent research production.
 
 
 ## Abstract
