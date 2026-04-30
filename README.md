@@ -1,5 +1,10 @@
 # EIB SME Lending and Financing Constraints: Country-Level Evidence
 
+## Note
+
+This research output was produced using the [MEGA-CAS Platform](https://github.com/ruschenpohler/agent-ml-platform-wp) (Mechanistically Enforced, Governed, and Audited Content-Addressed-Storage Platform) for trustworthy Human-Agent Research Production.
+
+
 ## Abstract
 
 EIB intermediated SME lending is premised on correcting financing market failures. Regions where SMEs face more severe financing obstacles should attract more EIB support, and that support should ease constraints. This project tests both claims using country-level panel data from the public EIB Projects dataset against pre-registered specifications. Targeting regressions ask whether EIB per-SME lending is systematically higher where constraints are most acute. A between-country estimator finds that countries with worse average constraints do receive more EIB lending on average, but within-country variation in constraints does not predict within-country variation in EIB intensity. The within-country null is robust to several checks and heterogeneity analyses. Employing a shift-share instrument, we ask whether exogenous variation in EIB sectoral exposure causally reduces those constraints but find the instrument to be weak at the country-level, and so we put little credence in these results. We caveat our findings by noting that because the EIB Projects data has no sub-national geographic codes, analysis is limited to 27 countries and hence statistical power low. Planned extensions outlined towards the end (working with EIB-internal regional data or EIBIS microdata) would resolve these limitations, and the needed analysis pipeline has already been set up and pre-registered. A further contribution is our use of Git's content-addressing as a lightweight but cryptographically verifiable pre-registration mechanism before data access. All primary specifications, expected coefficient signs, and the primary/secondary designation for every estimating equation, including analysis extensions, were committed at a fixed, publicly visible hash that cannot be altered retroactively.
@@ -121,7 +126,7 @@ The pre-registered primary causal test is the Callaway-Sant'Anna staggered diffe
 
 #### Bayesian hierarchical models with partial pooling
 
-A known limitation of country-level analysis is that small countries (e.g., Luxembourg, Malta, Slovenia) have extreme per-SME volatility driven by one or two projects. A Bayesian hierarchical model with partial pooling would shrink small-country estimates toward the EU mean in proportion to their uncertainty, producing more reliable descriptive rankings and potentially tightening targeting regression estimates by borrowing strength across countries (see Gelman and Hill, 2007). An implementation of such heterogeneity analysis as applied to the context of customer churn can be found in the Bayesian Segmentation project.
+A known limitation of country-level analysis is that small countries (e.g., Luxembourg, Malta, Slovenia) have extreme per-SME volatility driven by one or two projects. A Bayesian hierarchical model with partial pooling would shrink small-country estimates toward the EU mean in proportion to their uncertainty, producing more reliable descriptive rankings and potentially tightening targeting regression estimates by borrowing strength across countries (see Gelman and Hill, 2007). An implementation of such heterogeneity analysis as applied to the context of customer churn can be found in the [Bayesian Segmentation project](https://github.com/ruschenpohler/bayesian-segmentation).
 
 #### Sectoral green-investment shift shares
 
