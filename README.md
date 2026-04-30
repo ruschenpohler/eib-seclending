@@ -15,23 +15,23 @@ EIB intermediated SME lending is premised on correcting financing market failure
 With regressions confined to 27 EU member state clusters, the raw patterns in the data carry extra weight as a face-validity check.
 
 ![](outputs/figures/constraint_map.png)
-*Figure 1: Financing constraint severity by country, 2015–2021 mean (ECB SAFE). Constraint shares are highest in Southern and Eastern Europe and lowest in Northern and Western Europe — consistent with well-documented differences in financial market development.*
+*Figure 1: Financing constraint severity by country, 2015–2021 mean (ECB SAFE). Constraint shares are highest in Southern and Eastern Europe and lowest in Northern and Western Europe.*
 
 The geographic distribution of financing constraints aligns with textbook market-failure geography: Southern and Eastern Europe (Cyprus, Greece, Croatia, Bulgaria, Romania, Hungary, Portugal) report the highest shares of SMEs ranking access to finance as their main obstacle, while Northern and Western Europe (Denmark, Netherlands, Germany, Austria, Luxembourg, Sweden, Finland) report the lowest. This validates the constraint measure as a plausible indicator of financing-gap severity.
 
 ![](outputs/figures/timeseries.png)
-*Figure 2: Mean EIB lending intensity and financing constraint share, EU-27 averages 2015–2021. Both series decline in parallel through 2018 then co-spike in 2020, consistent with a shared macro driver rather than EIB responding specifically to constraint severity.*
+*Figure 2: Mean EIB lending intensity and financing constraint share, EU-27 averages 2015–2021. Both series, in parallel, decline through 2018 then spike in 2020.*
 
 Time-series trends show two notable patterns. First, a parallel pre-COVID decline: both mean EIB intensity and mean constraint severity fell from 2015 to 2018, then partly recovered into 2019. The co-movement is consistent with both series responding to the same macroeconomic driver — falling interest rates and ECB quantitative easing reduced financing constraints while also compressing demand for intermediated EIB credit — rather than EIB responding specifically to constraint severity. This shared macro sensitivity is consistent with the null targeting result. Second, the 2020 co-movement (both EIB intensity and constraints spiked) illustrates the confounding role of COVID-19, which the fixed-effects specification absorbs only imperfectly. Country-level facets show the same patterns for selected member states.
 
 ![](outputs/figures/delta_scatter.png)
-*Figure 3: Year-on-year changes in EIB lending intensity versus financing constraints, 131 country-year observations 2016–2021 (r = +0.215). Outliers reflect single-project small-country volatility; the 2020 COVID shock drives the upper-half cluster.*
+*Figure 3: Year-on-year changes in EIB lending intensity versus financing constraints, 131 country-year observations 2016–2021. Weakly positive correlation with outliers mostly due to single-project small-country volatility and COVID.*
 
 The year-on-year scatter of changes in EIB intensity versus changes in constraints shows a weak positive correlation (r = +0.215). Outliers are dominated by small-country volatility: Slovenia 2016 saw EIB per SME collapse by EUR 96,000 following an anomalously large 2015 commitment (likely a single project), while constraints fell independently. Italy 2020 and Germany 2020 show constraints spiking while EIB rose only modestly; the COVID credit crunch overwhelmed EIB's counter-cyclical role. The scatter cannot discriminate between targeting, growth confounds, and pandemic shocks; that is the purpose of the regression specification.
 
 ### Does EIB lending target regions with worse financing constraints?
 
-All regressions operate on at most 160 country-year observations across 27 EU member state clusters. With so few clusters, cluster-robust standard errors are unreliable; wild cluster bootstrap (WCB — 999 reps, Rademacher weights) is used throughout.
+All regressions operate on at most 160 country-year observations across 27 EU member state clusters. With so few clusters, cluster-robust standard errors are unreliable; wild cluster bootstrap (WCB: 999 reps, Rademacher weights) is used throughout.
 
 The pre-registered contemporaneous specification tests whether EIB lending per SME co-varies with the severity of financing constraints within country-year cells, controlling for GDP per capita, country fixed effects, year fixed effects, and a COVID-19 indicator:
 
@@ -107,29 +107,33 @@ The first-stage Kleibergen-Paap F-statistic is 2.45, far below the conventional 
 
 ## Extensions and next steps
 
-The null targeting result and the weak shift-share instrument share a common root: the public EIB dataset resolves only to the country level. Both limitations would be substantially addressed with either EIB-internal regional data or EIBIS microdata — and the analysis pipeline is already built for both. The extensions below represent the natural continuation of this work, not speculative additions.
+The null targeting result and the weak shift-share instrument share a common root: the public EIB dataset resolves only to the country level. Both limitations would be substantially addressed with either EIB-internal regional data or EIBIS microdata. The specific extensions below represent a natural continuation of this work.
 
 #### EIB-internal data with NUTS-2 granularity
 
-EIB-internal systems contain NUTS-2 or NUTS-3 region codes for each project, enabling analysis across roughly 200 regions rather than 27 countries. With that variation, the shift-share first stage could plausibly clear the F > 10 threshold. NUTS-2 employment shares and project-level intermediated-operation flags would also align the numerator (EIB volume) with the SME denominator more precisely. Regional-level targeting regressions would test whether the null country-level result masks within-country variation — the most substantively important open question from the current analysis. Access would require an EIB collaboration agreement or secondment.
+EIB-internal data contain NUTS-2 or NUTS-3 region codes for each project, enabling analysis across roughly 200 regions rather than 27 countries. With that variation, the shift-share first stage could plausibly clear the F > 10 threshold. NUTS-2 employment shares and project-level intermediated-operation flags would also align the numerator (EIB volume) with the SME denominator more precisely. Regional-level targeting regressions would provide an answer to the most substantively important open question from the current analysis: whether the null country-level result masks within-country variation.
 
 #### EIBIS microdata for firm-level causal inference
 
-The pre-registered primary causal test is the Callaway-Sant'Anna staggered difference-in-differences on EIBIS firm-level panel data. EIBIS contains roughly 12,000 firms across EU-27 with survey waves 2016–2025, including indicators for EIB-supported financing, green investment share, and firm characteristics (size, sector, export status). Access requires a formal application to the EIB Economics Department (typical timeline: two to six months). If approved, the analysis pipeline is already stubbed in `src/analysis/cs_estimation.py` and can be executed immediately. This would be the first pre-registered, staggered-adoption DiD test of EIB green investment additionality.
+The pre-registered primary causal test is the Callaway-Sant'Anna staggered difference-in-differences on EIBIS firm-level panel data. EIBIS contains roughly 12,000 firms across EU-27 with survey waves 2016–2025, including indicators for EIB-supported financing, green investment share, and firm characteristics (e.g., size, sector, export status). To our knowledge, this would be the first pre-registered, staggered-adoption DiD test of EIB green investment additionality.
 
 #### Bayesian hierarchical models with partial pooling
 
-A known limitation of country-level analysis is that small countries (Luxembourg, Malta, Slovenia) have extreme per-SME volatility driven by one or two projects. A Bayesian hierarchical model with partial pooling would shrink small-country estimates toward the EU mean in proportion to their uncertainty, producing more reliable descriptive rankings and potentially tightening targeting regression estimates by borrowing strength across countries (see Gelman and Hill, 2007).
+A known limitation of country-level analysis is that small countries (e.g., Luxembourg, Malta, Slovenia) have extreme per-SME volatility driven by one or two projects. A Bayesian hierarchical model with partial pooling would shrink small-country estimates toward the EU mean in proportion to their uncertainty, producing more reliable descriptive rankings and potentially tightening targeting regression estimates by borrowing strength across countries (see Gelman and Hill, 2007). An implementation of such heterogeneity analysis as applied to the context of customer churn can be found in the Bayesian Segmentation project.
 
 #### Sectoral green-investment shift shares
 
-An alternative shift-share construction would use EU-level green investment growth by sector (from Eurostat or the IEA) as the shifter, rather than EIB sectoral lending volumes. This would test whether regions with industrial structures tilted toward fast-growing green sectors receive more EIB support. Because green sector growth also affects firm green investment directly through industrial composition, this is a more descriptive exercise rather than a causal instrument, but it would be informative about EIB's thematic alignment with the green transition.
+An alternative shift-share instrument would use EU-level green investment growth by sector (from Eurostat or the IEA) as the shifter, rather than EIB sectoral lending volumes. This would test whether regions with industrial structures tilted toward fast-growing green sectors receive more EIB support. Because green sector growth likely affects firm-level green investment directly (through industrial composition), this may be more of a descriptive exercise rather than a causal instrument. But it would be informative about EIB's thematic alignment with the green transition.
 
 ---
 
 ## Contribution relative to existing literature
 
-Amamou, Gereben, and Wolski (2020) use propensity-score matching with difference-in-differences and find positive employment and investment effects of EIB intermediated lending, but cannot address staggered adoption or test the green investment mechanism. Barbera, Gereben, and Wolski (2022) estimate heterogeneous treatment effects using a generalized propensity score for continuous treatment intensity, again finding positive employment and investment effects, but rely on the same matching identification strategy. This project contributes in three respects: a pre-registered design that cannot be adjusted post-hoc (a methodological novelty for EIB evaluation work); a transparent diagnosis of why country-level public data cannot resolve targeting or causal identification (data literacy with an actionable remedy); and a ready-to-execute pipeline for the Callaway and Sant'Anna (2021) staggered difference-in-differences estimator that, once EIBIS access is granted, would yield the first pre-registered causal estimate of EIB green investment additionality.
+Amamou, Gereben, and Wolski (2020) use propensity-score matching with difference-in-differences and find positive employment and investment effects of EIB intermediated lending, but cannot address staggered adoption or test the green investment mechanism. Barbera, Gereben, and Wolski (2022) estimate heterogeneous treatment effects using a generalized propensity score for continuous treatment intensity, again finding positive employment and investment effects, but rely on the same matching identification strategy. This project contributes in three respects:
+
+1. A pre-registered design (including a credible signal that it cannot be adjusted post-hoc without a formal extension)
+2. A transparent diagnosis of why country-level public data cannot resolve targeting or causal identification
+3. A ready-to-execute pipeline for Callaway and Sant'Anna (2021) staggered difference-in-differences estimators (that, with EIBIS data, would yield the first pre-registered credibly causal estimate of EIB investment additionality)
 
 ---
 
@@ -144,7 +148,7 @@ eib-seclending/
 ├── outputs/
 │   ├── figures/         # versioned deliverables
 │   └── tables/          # versioned deliverables
-├── data/                # gitignored — raw, interim, processed
+├── data/                # gitignored (raw, interim, processed)
 ├── notebooks/           # exploratory only
 ├── prespec-plan.md      # pre-registered specifications (write-once)
 └── README.md            # this file
