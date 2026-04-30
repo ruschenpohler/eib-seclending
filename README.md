@@ -129,7 +129,9 @@ An alternative shift-share instrument would use EU-level green investment growth
 
 ## Contribution relative to existing literature
 
-Amamou, Gereben, and Wolski (2020) use propensity-score matching with difference-in-differences and find positive employment and investment effects of EIB intermediated lending, but cannot address staggered adoption or test the green investment mechanism. Barbera, Gereben, and Wolski (2022) estimate heterogeneous treatment effects using a generalized propensity score for continuous treatment intensity, again finding positive employment and investment effects, but rely on the same matching identification strategy. This project contributes in three respects:
+Amamou, Gereben, and Wolski (2020) use propensity-score matching with difference-in-differences and find positive employment and investment effects of EIB intermediated lending, but cannot address staggered adoption or test the green investment mechanism. Barbera, Gereben, and Wolski (2022) estimate heterogeneous treatment effects using a generalized propensity score for continuous treatment intensity, again finding positive employment and investment effects, but rely on the same matching identification strategy.
+
+This project contributes in three respects:
 
 1. A pre-registered design (including a credible signal that it cannot be adjusted post-hoc without a formal extension)
 2. A transparent diagnosis of why country-level public data cannot resolve targeting or causal identification
