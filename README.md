@@ -34,10 +34,10 @@ The geographic distribution of financing constraints aligns with textbook market
 
 Mean EIB intensity and mean constraint severity both fell from 2015 to 2018 and partly recovered into 2019. The co-movement is consistent with both series responding to the same macroeconomic environment (falling interest rates and ECB quantitative easing reduced financing constraints while compressing demand for intermediated EIB credit), rather than EIB responding to constraint severity per se. In 2020 both series spiked together, illustrating the role of COVID-19, which the fixed-effects specification absorbs only imperfectly.
 
-![](outputs/figures/delta_scatter.png)
-*Figure 3: Year-on-year changes in EIB lending intensity versus financing constraints, 131 country-year observations 2016 to 2021. Weak positive correlation (r = +0.215). Outliers are dominated by single-project small-country volatility and the 2020 COVID shock.*
+![](outputs/figures/between_scatter.png)
+*Figure 3: Between-country scatter of mean log EIB lending per SME versus mean financing constraint share, 2015 to 2021. Each point is a country labelled by ISO-2 code; the regression line and 95% confidence band are from the between estimator ($\hat\beta = +6.13$, p $= 0.009$).*
 
-The year-on-year scatter shows a weak positive within-country correlation. Slovenia 2016 reflects an anomalously large 2015 commitment; Italy 2020 and Germany 2020 show constraints spiking while EIB rose only modestly, the COVID credit crunch overwhelming any counter-cyclical EIB response. The scatter cannot discriminate between targeting, growth confounds, and pandemic shocks; that is the purpose of the regression specifications below.
+The between scatter visualizes the cross-sectional targeting relationship: countries with worse average financing constraints (Southern and Eastern Europe) cluster in the upper right, while low-constraint Northern and Western European countries cluster in the lower left. The fit is driven by the structural geographic gradient rather than by time-varying deviations within countries.
 
 ### Does EIB lending target countries with worse financing constraints?
 
@@ -47,11 +47,15 @@ $$\log(E_{rt}) = \beta \cdot C_{rt} + \gamma \cdot \log(G_{rt}) + \delta_r + \th
 
 where $E_{rt}$ is EIB volume per SME, $C_{rt}$ is the constraint share, and $G_{rt}$ is GDP per capita. With at most 160 country-year observations across 27 clusters, cluster-robust standard errors are unreliable; wild cluster bootstrap (WCB: 999 reps, Rademacher weights) is used throughout for within-country specifications. The between estimator collapses the panel to country means and uses HC3 standard errors with $N = 27$.
 
-| Specification | Pre-registered? | $\hat\beta$ | SE | 95% CI | p-value | WCB p | N |
-|---|---|---|---|---|---|---|---|
-| Contemporaneous (within-country) | Primary | +3.48 | 3.41 | [-3.2, +10.2] | 0.316 | 0.328 | 160 |
-| Lagged t-1 (within-country) | Primary | -0.19 | 2.25 | [-4.6, +4.3] | 0.933 | 0.901 | 133 |
-| Between-country (country means) | Exploratory | +6.13 | 2.34 | [+1.5, +10.7] | 0.009 | NA | 27 |
+| Specification | Pre-registered? | $\hat\beta$ | SE | 95% CI | p-value | WCB p | Holm p | N |
+|---|---|---|---|---|---|---|---|---|
+| Contemporaneous (within-country) | Primary | +3.48 | 3.41 | [-3.2, +10.2] | 0.316 | 0.328 | 0.656 | 160 |
+| Lagged t-1 (within-country) | Primary | -0.19 | 2.25 | [-4.6, +4.3] | 0.933 | 0.901 | 0.901 | 133 |
+| Between-country (country means) | Exploratory | +6.13 | 2.34 | [+1.5, +10.7] | 0.009 | NA | **0.035** | 27 |
+| Mundlak $\beta_W$ (within) | Exploratory | +5.16 | 3.22 | [-1.2, +11.5] | 0.109 | NA | 0.327 | 160 |
+| Mundlak $\beta_B$ (between) | Exploratory | +9.72 | 2.66 | [+4.5, +14.9] | 0.0003 | NA | **0.002** | 160 |
+
+*Holm-adjusted p-values are computed across the targeting family of five tests (contemporaneous, lagged, between, Mundlak $\beta_W$, Mundlak $\beta_B$). The between-country and Mundlak between effects survive multiple-testing correction at the 5% level.*
 
 **Within-country.** Both within-country point estimates are small relative to their standard errors. The contemporaneous 95% CI runs from $-3.2$ to $+10.2$; the lagged CI runs from $-4.6$ to $+4.3$. The data are consistent with both moderate positive targeting and moderate negative selection. WCB p-values confirm that neither estimate is significant at conventional levels.
 
@@ -61,20 +65,30 @@ The minimum detectable effect at 80% power and 5% significance for the contempor
 
 The contrast between the two estimators is the substantive finding. EIB lending appears to be structurally allocated across countries in line with the market-failure mandate, but does not respond to time-varying changes in constraint severity within countries. To put this differently, EIB targets the right countries but not the right years.
 
+The between-country coefficient is robust to dropping the four smallest countries (Luxembourg, Malta, Cyprus, Slovenia: $\hat\beta = +5.27$, SE $= 2.13$, p $= 0.013$) and to using medians rather than means ($\hat\beta = +7.68$, SE $= 4.70$, p $= 0.10$).
+
+#### Within and between in one regression (exploratory)
+
+A Mundlak (1978) correlated random effects specification unifies the within and between estimators in a single regression by including both the time-varying covariate and its country mean, with year fixed effects:
+
+$$\log(E_{rt}) = \beta_W \cdot (C_{rt} - \bar{C}_r) + \beta_B \cdot \bar{C}_r + \gamma_W \cdot (\log G_{rt} - \overline{\log G}_r) + \gamma_B \cdot \overline{\log G}_r + \theta_t + D_{2020} + \varepsilon_{rt}$$
+
+The within effect ($\hat\beta_W = +5.16$, SE $= 3.22$) is directionally similar to the primary within-country specification but less precisely estimated because the Mundlak omits country fixed effects. The between effect ($\hat\beta_B = +9.72$, SE $= 2.66$, p $= 0.0003$) confirms the cross-sectional targeting pattern on the same sample. A Wald test does not formally reject equality of the two effects ($\chi^2(1) = 1.21$, p $= 0.27$). The evidence is therefore consistent with structural targeting across countries, but the data are too coarse to determine whether EIB also responds to time-varying constraints within them.
+
 #### Heterogeneity across market integration and constraint severity
 
 Two pre-designated splits test whether the within-country result masks heterogeneity across financially integrated versus less integrated markets, or across high versus low constraint severity. All splits are exploratory (the prespec covers only primary specifications).
 
-| Split | Sample | $\hat\beta$ | SE | 95% CI | p-value | N |
-|---|---|---|---|---|---|---|
-| Euro area | 19 countries | +2.58 | 4.15 | [-5.7, +10.9] | 0.543 | 112 |
-| Non-euro | 8 countries | +7.73 | 4.83 | [-3.0, +18.5] | 0.153 | 48 |
-| Interaction (euro $\times$ C) | Pooled | +6.74 | 5.38 | [-3.8, +17.3] | 0.221 | 160 |
-| High constraint | 14 countries | +4.00 | 3.07 | [-2.2, +10.2] | 0.215 | 83 |
-| Low constraint | 13 countries | +5.96 | 8.77 | [-11.8, +23.7] | 0.510 | 77 |
-| Interaction (high $\times$ C) | Pooled | -2.12 | 7.90 | [-17.6, +13.4] | 0.791 | 160 |
+| Split | Sample | $\hat\beta$ | SE | 95% CI | p-value | Holm p | N |
+|---|---|---|---|---|---|---|---|
+| Euro area | 19 countries | +2.58 | 4.15 | [-5.7, +10.9] | 0.543 | 1.000 | 112 |
+| Non-euro | 8 countries | +7.73 | 4.83 | [-3.0, +18.5] | 0.153 | 0.918 | 48 |
+| Interaction (euro $\times$ C) | Pooled | +6.74 | 5.38 | [-3.8, +17.3] | 0.221 | 1.000 | 160 |
+| High constraint | 14 countries | +4.00 | 3.07 | [-2.2, +10.2] | 0.215 | 1.000 | 83 |
+| Low constraint | 13 countries | +5.96 | 8.77 | [-11.8, +23.7] | 0.510 | 1.000 | 77 |
+| Interaction (high $\times$ C) | Pooled | -2.12 | 7.90 | [-17.6, +13.4] | 0.791 | 1.000 | 160 |
 
-*Note on interaction terms.* The interaction models are estimated on the full pooled sample with country and year fixed effects, imposing a common GDP coefficient and COVID effect across subgroups. The subsample regressions are estimated on restricted samples with their own fixed effects. The interaction coefficient should be interpreted as a test of whether the pooled slope differs by subgroup, not as a decomposition of the subsample slopes.
+*Note on interaction terms.* The interaction models are estimated on the full pooled sample with country and year fixed effects, imposing a common GDP coefficient and COVID effect across subgroups. The subsample regressions are estimated on restricted samples with their own fixed effects. The interaction coefficient should be interpreted as a test of whether the pooled slope differs by subgroup, not as a decomposition of the subsample slopes. Holm-adjusted p-values are computed within the heterogeneity family of six tests; none survive multiple-testing correction.
 
 The non-euro subsample coefficient is larger ($+7.73$ versus $+2.58$ in the euro area), consistent with EIB having a stronger targeting rationale where financial markets are less integrated, but the interaction is not significant and the non-euro sample has only 8 countries. The constraint-level split is uninformative in both directions. No robustness or heterogeneity check produced an estimate that distinguishes within-country targeting from zero.
 
@@ -86,6 +100,8 @@ The within-country analysis cannot detect modest targeting given the data's geog
 2. EIB's mandate prioritises other dimensions (green investment, infrastructure, innovation) over financing-gap severity year-to-year, even where structural allocation tracks constraint geography.
 3. The country-level constraint measure is too coarse to detect targeting that responds to within-country variation.
 4. With 27 clusters, statistical power is insufficient to detect modest within-country targeting; the NUTS-2 extension would directly address this.
+
+A variance decomposition confirms that 75% of the variation in financing constraints is between countries, not over time within them. This means the within-country estimator is structurally underpowered regardless of how many years are added; more geographic units would be needed to exploit the remaining 25% of within-country variation.
 
 Pre-registered tests on downstream SME outcomes (industry investment rate and firm entry rate) yielded uninformative estimates and are reported in [`outputs/tables/appendix_outcomes.md`](outputs/tables/appendix_outcomes.md). The Eurostat investment variable is not reported at the SME size class, forcing the use of NACE B+C+D+E across all firm sizes (a deviation noted under the prespec amendment procedure). The denominator mismatch and the short outcome panel together make these regressions uninformative about whether EIB lending affects SME outcomes.
 
