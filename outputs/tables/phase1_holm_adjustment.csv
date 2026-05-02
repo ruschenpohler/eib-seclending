@@ -1,0 +1,12 @@
+family,test,raw_p,holm_p,reject
+targeting,Contemporaneous (within),0.328,0.656,False
+targeting,Lagged t-1 (within),0.901,0.901,False
+targeting,Between-country,0.0087,0.0348,True
+targeting,Mundlak beta_W,0.109,0.327,False
+targeting,Mundlak beta_B,0.0003,0.0014999999999999998,True
+heterogeneity,Euro area,0.543,1.0,False
+heterogeneity,Non-euro,0.153,0.9179999999999999,False
+heterogeneity,Euro interaction,0.221,1.0,False
+heterogeneity,High constraint,0.215,1.0,False
+heterogeneity,Low constraint,0.51,1.0,False
+heterogeneity,High interaction,0.791,1.0,False
