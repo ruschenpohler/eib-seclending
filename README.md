@@ -2,7 +2,7 @@
 
 ## Production pipeline
 
-> This research output was produced using the [MEGA-CAS Platform](https://github.com/ruschenpohler/agent-ml-platform-wp) (Mechanistically Enforced Governance and Auditability-centred Content-Addressed-Storage Platform) for trustworthy human-agent research production.
+> This research output was produced using the ML research platform for trustworthy human-agent collaboration in regulated environments ([link](https://github.com/ruschenpohler/agent-ml-platform-wp)).
 
 ## Abstract
 
