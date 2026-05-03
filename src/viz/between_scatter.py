@@ -114,7 +114,6 @@ def create_between_scatter():
     ax.set_title(
         "Between-country targeting: EIB intensity vs financing constraints",
         fontsize=12,
-        fontweight="bold",
     )
 
     sns.despine()
