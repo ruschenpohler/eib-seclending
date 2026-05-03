@@ -95,6 +95,8 @@ def beat1_constraint_map(panel):
         "EC SAFE Survey: Share of SMEs ranking access to finance as most important problem",
         fontsize=11,
     )
+    ax.set_xlim(-25, 45)
+    ax.set_ylim(34, 72)
     ax.set_axis_off()
 
     out = OUTPUTS_FIGURES / "constraint_map.png"
