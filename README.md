@@ -30,12 +30,12 @@ With regressions confined to 27 EU member state clusters, the raw patterns in th
 The geographic distribution of financing constraints aligns with common notions of market-failure geography. Cyprus, Greece, Croatia, Bulgaria, Romania, Hungary, and Portugal report the highest shares of SMEs ranking access to finance as their main obstacle. Denmark, Netherlands, Germany, Austria, Luxembourg, Sweden, and Finland report the lowest. The constraint measure is, prima facie, a plausible indicator of financing-gap severity.
 
 ![](outputs/figures/timeseries.png)
-*Figure 2: Mean EIB lending intensity and financing constraint share, EU-27 averages 2015 to 2021.*
+*Figure 2: Mean EIB lending intensity and financing constraint share, EU-27 averages 2015 to 2021. Lending intensity and constraint severity are mostly co-moving.*
 
 Mean EIB intensity and mean constraint severity both fell from 2015 to 2018 and partly recovered into 2019. The co-movement is consistent with both series responding to the same macroeconomic environment (falling interest rates and ECB quantitative easing reduced financing constraints while compressing demand for intermediated EIB credit), rather than EIB responding to constraint severity per se. In 2020 both series spiked together, illustrating the role of COVID-19, which the fixed-effects specification absorbs only imperfectly.
 
 ![](outputs/figures/between_scatter.png)
-*Figure 3: Between-country scatter of mean log EIB lending per SME against mean financing constraint share, 2015 to 2021. Each point is a country labelled by ISO-2 code; the regression line and 95% confidence band are from the between estimator ($\hat\beta = +6.13$, p $= 0.009$).*
+*Figure 3: Between-country scatter of EIB lending intensity against financing constraint share, 2015 to 2021. Lending and financing constraint are modestly correlated across-countries.*
 
 The between scatter visualises the cross-sectional targeting relationship. Countries with worse average financing constraints (Southern and Eastern Europe) cluster in the upper right, and low-constraint Northern and Western European countries cluster in the lower left. The fit is driven by the structural geographic gradient rather than by time-varying deviations within countries.
 
@@ -61,7 +61,7 @@ where $E_{rt}$ is EIB volume per SME, $C_{rt}$ is the constraint share, and $G_{
 
 #### Within and between in one regression (exploratory)
 
-A Mundlak (1978) correlated random effects specification puts both estimators in a single regression on the same sample by including the time-varying covariate alongside its country mean, with year fixed effects:
+A correlated random effects specification (Wooldridge, 2010; Mundlak, 1978) puts both estimators in a single regression on the same sample by including the time-varying covariate alongside its country mean, with year fixed effects:
 
 $$\log(E_{rt}) = \beta_W \cdot (C_{rt} - \bar{C}_r) + \beta_B \cdot \bar{C}_r + \gamma_W \cdot (\log G_{rt} - \overline{\log G}_r) + \gamma_B \cdot \overline{\log G}_r + \theta_t + D_{2020} + \varepsilon_{rt}$$
 
@@ -190,6 +190,8 @@ Borusyak, K., Hull, P., & Jaravel, X. (2022). Quasi-experimental shift-share res
 Callaway, B., & Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. *Journal of Econometrics*, 225(2), 200 to 230.
 
 Gelman, A., & Hill, J. (2007). *Data Analysis Using Regression and Multilevel/Hierarchical Models*. Cambridge University Press.
+
+Wooldridge, J. M. (2010). *Econometric Analysis of Cross Section and Panel Data* (2nd ed.). MIT Press.
 
 Mundlak, Y. (1978). On the pooling of time series and cross section data. *Econometrica*, 46(1), 69 to 85.
 
