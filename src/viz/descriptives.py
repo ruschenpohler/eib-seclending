@@ -61,7 +61,7 @@ def beat1_constraint_map(panel):
     # Merge
     europe = europe.merge(mean_constraint, on="ne_iso", how="left")
 
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+    fig, ax = plt.subplots(1, 1, figsize=(9, 8))
 
     # Plot countries with data
     europe_with_data = europe[europe["constraint_share"].notna()]
