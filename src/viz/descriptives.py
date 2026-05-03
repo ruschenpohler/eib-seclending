@@ -36,28 +36,33 @@ def beat1_constraint_map(panel):
     )
     mean_constraint.columns = ["iso_a2", "constraint_share"]
 
+    # Natural Earth 110m uses some different codes; map them
+    iso_map = {"EL": "GR", "FR": "-99"}  # FR is -99 in NE; MT is missing entirely
+    mean_constraint["ne_iso"] = mean_constraint["iso_a2"].replace(iso_map)
+
     # Load world shapefile and filter for Europe
-    # GeoPandas 1.0+ removed gpd.datasets; fetch directly from Natural Earth
     world_url = (
         "https://naciscdn.org/naturalearth/110m/cultural/"
         "ne_110m_admin_0_countries.zip"
     )
     world = gpd.read_file(world_url)
     europe = world[world["CONTINENT"] == "Europe"].copy()
-    # Also include Turkey and Cyprus which may be coded differently
     europe = pd.concat(
         [
             europe,
             world[world["ISO_A2"].isin(["CY", "TR"])],
         ]
     ).drop_duplicates(subset=["ISO_A2"])
-    europe = europe.rename(columns={"ISO_A2": "iso_a2"})
+    europe = europe.rename(columns={"ISO_A2": "ne_iso"})
 
     # Merge
-    europe = europe.merge(mean_constraint, on="iso_a2", how="left")
+    europe = europe.merge(mean_constraint, on="ne_iso", how="left")
 
     fig, ax = plt.subplots(1, 1, figsize=(12, 8))
-    europe.plot(
+
+    # Plot countries with data
+    europe_with_data = europe[europe["constraint_share"].notna()]
+    europe_with_data.plot(
         column="constraint_share",
         cmap="YlOrRd",
         linewidth=0.5,
@@ -70,8 +75,27 @@ def beat1_constraint_map(panel):
             "pad": 0.03,
             "shrink": 0.6,
         },
-        missing_kwds={"color": "lightgray", "label": "No data"},
     )
+
+    # Plot countries with no data in thin black (includes Malta which has no geometry)
+    europe_no_data = europe[europe["constraint_share"].isna()]
+    if not europe_no_data.empty:
+        europe_no_data.plot(
+            ax=ax,
+            facecolor="none",
+            edgecolor="black",
+            linewidth=0.8,
+        )
+
+    # For Malta (too small for 110m), add a note if it's in the data
+    if "MT" in mean_constraint["iso_a2"].values:
+        ax.annotate(
+            "MT",
+            xy=(14.5, 35.9),
+            fontsize=8,
+            ha="center",
+            fontweight="bold",
+        )
 
     ax.set_title(
         "Financial Constraints by Country (2015-2021 mean)\n"
