@@ -36,24 +36,27 @@ def beat1_constraint_map(panel):
     )
     mean_constraint.columns = ["iso_a2", "constraint_share"]
 
-    # Natural Earth 110m uses some different codes; map them
-    iso_map = {"EL": "GR", "FR": "-99"}  # FR is -99 in NE; MT is missing entirely
-    mean_constraint["ne_iso"] = mean_constraint["iso_a2"].replace(iso_map)
-
     # Load world shapefile and filter for Europe
     world_url = (
         "https://naciscdn.org/naturalearth/110m/cultural/"
         "ne_110m_admin_0_countries.zip"
     )
     world = gpd.read_file(world_url)
+
+    # Fix Natural Earth's broken ISO_A2 codes before any merge
+    # France is coded as -99; patch it by name
+    world.loc[world["NAME"] == "France", "ISO_A2"] = "FR"
+    # Greece is already GR; EL is our data code, mapped below
+
     europe = world[world["CONTINENT"] == "Europe"].copy()
     europe = pd.concat(
-        [
-            europe,
-            world[world["ISO_A2"].isin(["CY", "TR"])],
-        ]
+        [europe, world[world["ISO_A2"].isin(["CY", "TR"])]]
     ).drop_duplicates(subset=["ISO_A2"])
     europe = europe.rename(columns={"ISO_A2": "ne_iso"})
+
+    # Map our data codes to Natural Earth codes
+    iso_map = {"EL": "GR"}
+    mean_constraint["ne_iso"] = mean_constraint["iso_a2"].replace(iso_map)
 
     # Merge
     europe = europe.merge(mean_constraint, on="ne_iso", how="left")
@@ -77,24 +80,14 @@ def beat1_constraint_map(panel):
         },
     )
 
-    # Plot countries with no data in thin black (includes Malta which has no geometry)
+    # Plot countries with no data in thin black outlines
     europe_no_data = europe[europe["constraint_share"].isna()]
     if not europe_no_data.empty:
         europe_no_data.plot(
             ax=ax,
             facecolor="none",
             edgecolor="black",
-            linewidth=0.8,
-        )
-
-    # For Malta (too small for 110m), add a note if it's in the data
-    if "MT" in mean_constraint["iso_a2"].values:
-        ax.annotate(
-            "MT",
-            xy=(14.5, 35.9),
-            fontsize=8,
-            ha="center",
-            fontweight="bold",
+            linewidth=0.3,
         )
 
     ax.set_title(
